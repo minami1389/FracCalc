@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E9AA34E317EFD69E00691B94 /* COINSFraction.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AA34DC17EFD69E00691B94 /* COINSFraction.m */; };
+		E9AA34E417EFD69E00691B94 /* COINSKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AA34DE17EFD69E00691B94 /* COINSKeyboard.m */; };
+		E9AA34E617EFD69E00691B94 /* COINSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AA34E217EFD69E00691B94 /* COINSViewController.m */; };
 		E9DFD0CE17E42A83008E753E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9DFD0CD17E42A83008E753E /* UIKit.framework */; };
 		E9DFD0D017E42A83008E753E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9DFD0CF17E42A83008E753E /* Foundation.framework */; };
 		E9DFD0D217E42A83008E753E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9DFD0D117E42A83008E753E /* CoreGraphics.framework */; };
@@ -18,10 +21,15 @@
 		E9DFD0E417E42A83008E753E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9DFD0E317E42A83008E753E /* Default-568h@2x.png */; };
 		E9DFD0E717E42A83008E753E /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9DFD0E517E42A83008E753E /* MainStoryboard_iPhone.storyboard */; };
 		E9DFD0EA17E42A83008E753E /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9DFD0E817E42A83008E753E /* MainStoryboard_iPad.storyboard */; };
-		E9DFD0ED17E42A83008E753E /* COINSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9DFD0EC17E42A83008E753E /* COINSViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E9AA34DB17EFD69E00691B94 /* COINSFraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = COINSFraction.h; path = ../COINSFraction.h; sourceTree = "<group>"; };
+		E9AA34DC17EFD69E00691B94 /* COINSFraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = COINSFraction.m; path = ../COINSFraction.m; sourceTree = "<group>"; };
+		E9AA34DD17EFD69E00691B94 /* COINSKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = COINSKeyboard.h; path = ../COINSKeyboard.h; sourceTree = "<group>"; };
+		E9AA34DE17EFD69E00691B94 /* COINSKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = COINSKeyboard.m; path = ../COINSKeyboard.m; sourceTree = "<group>"; };
+		E9AA34E117EFD69E00691B94 /* COINSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = COINSViewController.h; path = ../COINSViewController.h; sourceTree = "<group>"; };
+		E9AA34E217EFD69E00691B94 /* COINSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = COINSViewController.m; path = ../COINSViewController.m; sourceTree = "<group>"; };
 		E9DFD0CA17E42A83008E753E /* FracCalc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FracCalc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9DFD0CD17E42A83008E753E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E9DFD0CF17E42A83008E753E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -37,8 +45,6 @@
 		E9DFD0E317E42A83008E753E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		E9DFD0E617E42A83008E753E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		E9DFD0E917E42A83008E753E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
-		E9DFD0EB17E42A83008E753E /* COINSViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = COINSViewController.h; sourceTree = "<group>"; };
-		E9DFD0EC17E42A83008E753E /* COINSViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = COINSViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +61,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E9AA34E717EFD7E300691B94 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E9AA34DB17EFD69E00691B94 /* COINSFraction.h */,
+				E9AA34DC17EFD69E00691B94 /* COINSFraction.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		E9AA34E817EFD7ED00691B94 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E9AA34DD17EFD69E00691B94 /* COINSKeyboard.h */,
+				E9AA34DE17EFD69E00691B94 /* COINSKeyboard.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		E9AA34E917EFD7F600691B94 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E9AA34E117EFD69E00691B94 /* COINSViewController.h */,
+				E9AA34E217EFD69E00691B94 /* COINSViewController.m */,
+				E9DFD0DC17E42A83008E753E /* COINSAppDelegate.h */,
+				E9DFD0DD17E42A83008E753E /* COINSAppDelegate.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
 		E9DFD0C117E42A83008E753E = {
 			isa = PBXGroup;
 			children = (
@@ -85,12 +120,11 @@
 		E9DFD0D317E42A83008E753E /* FracCalc */ = {
 			isa = PBXGroup;
 			children = (
-				E9DFD0DC17E42A83008E753E /* COINSAppDelegate.h */,
-				E9DFD0DD17E42A83008E753E /* COINSAppDelegate.m */,
+				E9AA34E917EFD7F600691B94 /* Controller */,
+				E9AA34E817EFD7ED00691B94 /* View */,
+				E9AA34E717EFD7E300691B94 /* Model */,
 				E9DFD0E517E42A83008E753E /* MainStoryboard_iPhone.storyboard */,
 				E9DFD0E817E42A83008E753E /* MainStoryboard_iPad.storyboard */,
-				E9DFD0EB17E42A83008E753E /* COINSViewController.h */,
-				E9DFD0EC17E42A83008E753E /* COINSViewController.m */,
 				E9DFD0D417E42A83008E753E /* Supporting Files */,
 			);
 			path = FracCalc;
@@ -180,7 +214,9 @@
 			files = (
 				E9DFD0DA17E42A83008E753E /* main.m in Sources */,
 				E9DFD0DE17E42A83008E753E /* COINSAppDelegate.m in Sources */,
-				E9DFD0ED17E42A83008E753E /* COINSViewController.m in Sources */,
+				E9AA34E317EFD69E00691B94 /* COINSFraction.m in Sources */,
+				E9AA34E417EFD69E00691B94 /* COINSKeyboard.m in Sources */,
+				E9AA34E617EFD69E00691B94 /* COINSViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,6 +349,7 @@
 				E9DFD0F217E42A83008E753E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
