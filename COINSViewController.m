@@ -147,7 +147,7 @@
     center2.adjustsFontSizeToFitWidth = YES;
     center2.backgroundColor = [UIColor clearColor];
     
-    center3 = [[UILabel alloc] initWithFrame:CGRectMake(460, 260, 120, 120)];
+    center3 = [[UILabel alloc] initWithFrame:CGRectMake(460, 265, 120, 120)];
     [self.view addSubview:center3];
     center3.textAlignment = NSTextAlignmentCenter;
     center3.font = [UIFont systemFontOfSize:90];
