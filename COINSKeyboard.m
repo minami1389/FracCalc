@@ -22,6 +22,13 @@
 
 - (void)updateButtonsWithRow:(NSUInteger)r column:(NSUInteger)c titles:(NSArray *)t outCharacters:(NSString *)s
 {
+	// check if number of buttons and titles match
+	if (t.count != s.length) {
+		NSLog(@"button title count and out characters don't match!");
+		return;
+	}
+
+	// remove all buttons from view and array
 	if (buttons) {
 		for (UIButton *aButton in buttons) {
 			[aButton removeFromSuperview];
@@ -30,9 +37,7 @@
 	} else {
 		buttons = [NSMutableArray array];
 	}
-	if (t.count != s.length) {
-		NSLog(@"button title count and out characters don't match!");
-	}
+	
 	UIColor *backgroundColor = [UIColor blackColor];
 	UIColor *keyColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.0];
 	self.backgroundColor = backgroundColor;
@@ -59,35 +64,27 @@
 		aButton.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:buttonSize.width / 2];
 		aButton.titleLabel.adjustsFontSizeToFitWidth = YES;
 		// set key color
-		if ([aButton.titleLabel.text isEqualToString:@"+"]
-			|| [aButton.titleLabel.text isEqualToString:@"-"]
-			|| [aButton.titleLabel.text isEqualToString:@"×"]
-			|| [aButton.titleLabel.text isEqualToString:@"÷"]
-			|| [aButton.titleLabel.text isEqualToString:@"="]) { // four arithmetic operator or equal
+		NSCharacterSet *operators = [NSCharacterSet characterSetWithCharactersInString:@"+-×÷="];
+		NSRange operatorsRange = [aButton.titleLabel.text rangeOfCharacterFromSet:operators];
+		if (operatorsRange.location == NSNotFound) {
+			NSCharacterSet *numerals = [NSCharacterSet characterSetWithCharactersInString:@"1234567890"];
+			NSRange numeralRange = [aButton.titleLabel.text rangeOfCharacterFromSet:numerals];
+			if (numeralRange.location == NSNotFound) { // others
+				[aButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+				aButton.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0];
+			} else { // numeral
+				[aButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+				aButton.backgroundColor = keyColor;
+			}
+		} else { // four arithmetic operator or equal
 			[aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 			aButton.backgroundColor = [UIColor colorWithRed:1.0 green:0.56 blue:0.0 alpha:1.0];
-		} else if ([aButton.titleLabel.text isEqualToString:@"0"]
-				   || [aButton.titleLabel.text isEqualToString:@"1"]
-				   || [aButton.titleLabel.text isEqualToString:@"2"]
-				   || [aButton.titleLabel.text isEqualToString:@"3"]
-				   || [aButton.titleLabel.text isEqualToString:@"4"]
-				   || [aButton.titleLabel.text isEqualToString:@"5"]
-				   || [aButton.titleLabel.text isEqualToString:@"6"]
-				   || [aButton.titleLabel.text isEqualToString:@"7"]
-				   || [aButton.titleLabel.text isEqualToString:@"8"]
-				   || [aButton.titleLabel.text isEqualToString:@"9"]
-				   ) { // numeral
-			[aButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-			aButton.backgroundColor = keyColor;
-		} else { // others
-			[aButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-			aButton.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0];
 		}
 		aButton.layer.borderWidth = buttonBorderWidth;
 		aButton.layer.borderColor = [backgroundColor CGColor];
 		
 		[buttons addObject:aButton];
-		
+	
 		[self addSubview:aButton];
 	}
 }

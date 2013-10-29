@@ -16,22 +16,18 @@
 @implementation COINSViewController {
 	NSInteger turn;
 	
-	UILabel *firstInteger;
-	UILabel *secondInteger;
-	UILabel *thirdInteger;
-
 	NSMutableString *inputString;
 	NSMutableString *inString;
-    UILabel *messageLabel;
 }
 
 @synthesize keyboard;
 
-@synthesize firstSignLabel, firstNumeratorLabel, firstVinculumView, firstDenominatorLabel;
+@synthesize firstSignLabel, firstNumeratorLabel, firstVinculumView, firstDenominatorLabel, firstIntegerLabel;
 @synthesize firstOperatorLabel;
-@synthesize secondSignLabel, secondNumeratorLabel, secondVinculumView, secondDenominatorLabel;
+@synthesize secondSignLabel, secondNumeratorLabel, secondVinculumView, secondDenominatorLabel, secondIntegerLabel;
 @synthesize firstEqualLabel;
-@synthesize thirdSignLabel, thirdNumeratorLabel, thirdVinculumView, thirdDenominatorLabel;
+@synthesize thirdSignLabel, thirdNumeratorLabel, thirdVinculumView, thirdDenominatorLabel, thirdIntegerLabel;
+@synthesize messageLabel;
 
 - (void)viewDidLoad
 {
@@ -42,36 +38,13 @@
     turn = 0;
 
 	inputString = [NSMutableString string];
-    
     inString = [NSMutableString string];
 
 	keyboard.delegate = self;
-    
-    firstInteger = [[UILabel alloc] initWithFrame:CGRectMake(4, 260, 120, 120)];
-    [self.view addSubview:firstInteger];
-    firstInteger.textAlignment = NSTextAlignmentCenter;
-    firstInteger.font = [UIFont systemFontOfSize:90];
-    firstInteger.adjustsFontSizeToFitWidth = YES;
-    firstInteger.backgroundColor = [UIColor clearColor];
-
-	
-    secondInteger = [[UILabel alloc] initWithFrame:CGRectMake(236, 260, 120, 120)];
-    [self.view addSubview:secondInteger];
-    secondInteger.textAlignment = NSTextAlignmentCenter;
-    secondInteger.font = [UIFont systemFontOfSize:90];
-    secondInteger.adjustsFontSizeToFitWidth = YES;
-    secondInteger.backgroundColor = [UIColor clearColor];
-
-    thirdInteger = [[UILabel alloc] initWithFrame:CGRectMake(460, 265, 120, 120)];
-    [self.view addSubview:thirdInteger];
-    thirdInteger.textAlignment = NSTextAlignmentCenter;
-    thirdInteger.font = [UIFont systemFontOfSize:90];
-    thirdInteger.adjustsFontSizeToFitWidth = YES;
-    thirdInteger.backgroundColor = [UIColor clearColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated
-{
+{ // update button alignment according to UIInterfaceOrientation
 	if (self.interfaceOrientation == UIInterfaceOrientationPortrait
 		|| self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
 		[self didRotateFromInterfaceOrientation:UIInterfaceOrientationLandscapeLeft];
@@ -185,7 +158,7 @@
 // 計算結果の表示(整数値かどうかによって場合分け)
         NSRange slash = [inputString rangeOfString:@"b"];
         if (slash.location == NSNotFound) {
-            thirdInteger.text = inputString;
+            thirdIntegerLabel.text = inputString;
         } else {
             NSArray *answer = [inputString componentsSeparatedByString:@"b"];
             NSString *n = answer[0];
@@ -215,7 +188,7 @@
         firstDenominatorLabel.text = @"";
         secondDenominatorLabel.text = @"";
         thirdDenominatorLabel.text = @"";
-        thirdInteger.text = @"";
+        thirdIntegerLabel.text = @"";
 		firstVinculumView.hidden = YES;
 		secondVinculumView.hidden = YES;
 		thirdVinculumView.hidden = YES;

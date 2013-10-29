@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *firstNumeratorLabel;
 @property (weak, nonatomic) IBOutlet UIView *firstVinculumView;
 @property (weak, nonatomic) IBOutlet UILabel *firstDenominatorLabel;
+@property (weak, nonatomic) IBOutlet UILabel *firstIntegerLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *firstOperatorLabel;
 
@@ -26,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *secondNumeratorLabel;
 @property (weak, nonatomic) IBOutlet UIView *secondVinculumView;
 @property (weak, nonatomic) IBOutlet UILabel *secondDenominatorLabel;
+@property (weak, nonatomic) IBOutlet UILabel *secondIntegerLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *firstEqualLabel;
 
@@ -33,7 +35,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *thirdNumeratorLabel;
 @property (weak, nonatomic) IBOutlet UIView *thirdVinculumView;
 @property (weak, nonatomic) IBOutlet UILabel *thirdDenominatorLabel;
+@property (weak, nonatomic) IBOutlet UILabel *thirdIntegerLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 
 @end
 
