@@ -12,7 +12,7 @@
 
 @property NSUInteger numerator;
 @property NSUInteger denominator;
-@property NSInteger	 sign;
+@property NSInteger	 sign; // 1 or -1
 
 /* Create fraction */
 /// Designated initializer

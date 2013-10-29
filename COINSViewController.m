@@ -36,10 +36,10 @@
 	[self setNeedsStatusBarAppearanceUpdate];
 	
     turn = 0;
-
+	
 	inputString = [NSMutableString string];
     inString = [NSMutableString string];
-
+	
 	keyboard.delegate = self;
 }
 
@@ -53,7 +53,7 @@
 	}
 }
 
--(UIStatusBarStyle)preferredStatusBarStyle{
+- (UIStatusBarStyle)preferredStatusBarStyle{ // set status bar style to LightContent
     return UIStatusBarStyleLightContent;
 }
 
@@ -61,139 +61,145 @@
 
 - (void)input:(unichar)c;
 {
-    COINSFraction *z;
+    COINSFraction *thirdFraction;
     messageLabel.text = @"";
-    NSRange allclear;
-
+    NSRange wholeRange;
+	
     [inputString appendFormat:@"%c",c];
-    allclear = NSMakeRange(0, inputString.length);
-        
+	NSLog(@"inputString:%@", inputString);
+    wholeRange = NSMakeRange(0, inputString.length);
+	
     
-// AllClear,Clear
+	// AllClear, Clear
     if (c == 'a') {
-        [inputString replaceCharactersInRange:allclear withString:@""];
+        [inputString deleteCharactersInRange:wholeRange];
     } else if (c == 'c') {
-        NSRange c = NSMakeRange(inputString.length-2, 2);
-        [inputString replaceCharactersInRange:c withString:@""];
+        NSRange clearRange = NSMakeRange(inputString.length - 2, 2);
+        [inputString deleteCharactersInRange:clearRange];
     }
     
-    
-// 最終計算
+	// 最終計算
     if (c == '=' && turn == 3) {
         
-// 左、演算子、右の分割
-        NSMutableString *left;
-        NSMutableString *right;
-        NSArray *com = [inputString componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"+-*/"]];
-                left = com[0];
-                right = com[1];
+		// 左、演算子、右の分割
+        NSMutableString *firstFractionString;
+        NSMutableString *secondFractionString;
+        NSArray *components = [inputString componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"+-*/"]];
+		firstFractionString = components[0];
+		secondFractionString = components[1];
         
-       
+		
         
-// 演算子の識別
-        NSInteger number;
-        NSRange symbol = [inputString rangeOfString:@"+"];
-        if (symbol.length == 1) {
-            number = 1;
+		// 演算子の識別
+		char op;
+        NSRange operatorRange = [inputString rangeOfString:@"+"];
+        if (operatorRange.length == 1) {
+            op = '+';
         }
-        symbol = [inputString rangeOfString:@"-"];
-        if (symbol.length == 1) {
-            number = 2;
+        operatorRange = [inputString rangeOfString:@"-"];
+        if (operatorRange.length == 1) {
+			op = '-';
         }
-        symbol = [inputString rangeOfString:@"*"];
-        if (symbol.length == 1) {
-            number = 3;
+        operatorRange = [inputString rangeOfString:@"*"];
+        if (operatorRange.length == 1) {
+            op = '*';
         }
-        symbol = [inputString rangeOfString:@"/"];
-        if (symbol.length == 1) {
-            number = 4;
+        operatorRange = [inputString rangeOfString:@"/"];
+        if (operatorRange.length == 1) {
+			op = '/';
         }
         
         
-// Stringから分数を作成(帯分数とそれ以外を場合分け)
-        COINSFraction *l;
-        COINSFraction *r;
-            
-        NSRange s = [left rangeOfString:@"m"];
+		// Stringから分数を作成(帯分数とそれ以外を場合分け)
+        COINSFraction *firstFraction;
+        COINSFraction *secondFraction;
+		
+        NSRange s = [firstFractionString rangeOfString:@"m"];
         if (s.location == NSNotFound) {
-            l = [COINSFraction fractionWithString:left];
+            firstFraction = [COINSFraction fractionWithString:firstFractionString];
         } else {
-            l = [COINSFraction MixedfractionWithString:left];
+            firstFraction = [COINSFraction MixedfractionWithString:firstFractionString];
         }
-            
-        s = [right rangeOfString:@"m"];
+		
+        s = [secondFractionString rangeOfString:@"m"];
         if (s.location == NSNotFound) {
-            r = [COINSFraction fractionWithString:right];
+            secondFraction = [COINSFraction fractionWithString:secondFractionString];
         } else {
-            r = [COINSFraction MixedfractionWithString:right];
+            secondFraction = [COINSFraction MixedfractionWithString:secondFractionString];
         }
         
         
-// 計算(演算子によって場合分け)
-        switch (number) {
-            case 1:
-                z = [COINSFraction add:l to:r];
+		// 計算(演算子によって場合分け)
+        switch (op) {
+            case '+':
+                thirdFraction = [COINSFraction add:firstFraction to:secondFraction];
                 break;
-                
-            case 2:
-                z = [COINSFraction subtract:r from:l];
+            case '-':
+                thirdFraction = [COINSFraction subtract:secondFraction from:firstFraction];
                 break;
-                    
-            case 3:
-                z = [COINSFraction multiply:l by:r];
+            case '*':
+                thirdFraction = [COINSFraction multiply:firstFraction by:secondFraction];
                 break;
-                
-            case 4:
-                z = [COINSFraction divide:l by:r];
+            case '/':
+                thirdFraction = [COINSFraction divide:firstFraction by:secondFraction];
                 break;
-                
             default:
+				NSLog(@"Unknown operator!");
                 break;
-            }
+		}
         
-        NSRange range = NSMakeRange(0, inputString.length);
-        [inputString replaceCharactersInRange:range withString:z.stringRepresentation];
+//		wholeRange = NSMakeRange(0, inputString.length);
+//        [inputString replaceCharactersInRange:wholeRange withString:thirdFraction.stringRepresentation];
         
-        
-// 計算結果の表示(整数値かどうかによって場合分け)
-        NSRange slash = [inputString rangeOfString:@"b"];
-        if (slash.location == NSNotFound) {
-            thirdIntegerLabel.text = inputString;
-        } else {
-            NSArray *answer = [inputString componentsSeparatedByString:@"b"];
-            NSString *n = answer[0];
-            NSString *d = answer[1];
-            thirdNumeratorLabel.text = n;
-            thirdDenominatorLabel.text = d;
-            thirdVinculumView.hidden = NO;
-            }
-        }
-
+		// 計算結果の表示(整数値かどうかによって場合分け)
+		if (thirdFraction.denominator == 1) { // thirdFraction is an integer
+			thirdIntegerLabel.text = [NSString stringWithFormat:@"%d", thirdFraction.numerator];
+		} else {
+			thirdNumeratorLabel.text = [NSString stringWithFormat:@"%d", thirdFraction.numerator];
+			thirdDenominatorLabel.text = [NSString stringWithFormat:@"%d", thirdFraction.denominator];
+			thirdVinculumView.hidden = NO;
+		}
+		if (thirdFraction.sign == -1) {
+			thirdSignLabel.text = @"-";
+		}
+	}
+	
     
-// 計算過程の表示
+	// 計算過程の表示
     [inString appendFormat:@"%c",c];
     
-    NSCharacterSet *signalset = [NSCharacterSet characterSetWithCharactersInString:@"+-*/b=()"];
-    NSRange signal = [inString rangeOfCharacterFromSet:signalset];
+    NSCharacterSet *operators = [NSCharacterSet characterSetWithCharactersInString:@"+-*/b=()"];
+    NSRange operatorRange = [inString rangeOfCharacterFromSet:operators];
     NSRange inStringRange = NSMakeRange(0, inString.length);
     
-//AllClear
+	//AllClear
     if (c == 'a') {
         [inString replaceCharactersInRange:inStringRange withString:@""];
+		firstSignLabel.text = @"";
         firstNumeratorLabel.text = @"";
-        firstOperatorLabel.text = @"";
-        secondNumeratorLabel.text = @"";
+		firstDenominatorLabel.text = @"";
+		firstIntegerLabel.text = @"";
+        
+		firstOperatorLabel.text = @"";
+        
+		secondSignLabel.text = @"";
+		secondNumeratorLabel.text = @"";
+		secondDenominatorLabel.text = @"";
+		secondIntegerLabel.text = @"";
+		
         firstEqualLabel.text = @"";
+		
+		thirdSignLabel.text = @"";
         thirdNumeratorLabel.text = @"";
-        firstDenominatorLabel.text = @"";
-        secondDenominatorLabel.text = @"";
         thirdDenominatorLabel.text = @"";
         thirdIntegerLabel.text = @"";
+		
 		firstVinculumView.hidden = YES;
 		secondVinculumView.hidden = YES;
 		thirdVinculumView.hidden = YES;
+
         turn = 0;
-    } else if (turn == 0 && signal.location == NSNotFound) {   //左分母
+    } else if (turn == 0 && operatorRange.location == NSNotFound) {   //左分母
         firstDenominatorLabel.text = inString;
         
     } else if (c == 'b' && turn == 0 && inStringRange.length > 1) {   //左括線
@@ -201,7 +207,7 @@
         [inString replaceCharactersInRange:inStringRange withString:@""];
         turn++;
         
-    } else if (turn == 1 && signal.location == NSNotFound) {   //左分子
+    } else if (turn == 1 && operatorRange.location == NSNotFound) {   //左分子
         firstNumeratorLabel.text = inString;
         
     } else if (c == '+' && turn == 1 && inStringRange.length > 1) {   //演算子
@@ -221,7 +227,7 @@
         [inString replaceCharactersInRange:inStringRange withString:@""];
         turn++;
         
-    } else if (turn == 2 && signal.location == NSNotFound) {   //右分母
+    } else if (turn == 2 && operatorRange.location == NSNotFound) {   //右分母
         secondDenominatorLabel.text = inString;
         
     } else if (c == 'b' && turn == 2) {   //右括線
@@ -229,7 +235,7 @@
         [inString replaceCharactersInRange:inStringRange withString:@""];
         turn++;
         
-    } else if (turn == 3 && signal.location == NSNotFound) {   //右分子
+    } else if (turn == 3 && operatorRange.location == NSNotFound) {   //右分子
         secondNumeratorLabel.text = inString;
         
     } else if (c == '=' && turn == 3) {   //イコール
@@ -241,7 +247,7 @@
     } else {   //その他
         messageLabel.text = @"入力ミスです";
     }
-
+	
     NSLog(@"inputString: %@", inputString);
     NSLog(@"inString: %@", inString);
 }
