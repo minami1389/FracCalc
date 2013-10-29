@@ -12,64 +12,84 @@
 	NSMutableArray *buttons;
 	NSUInteger row;
 	NSUInteger column;
-	NSArray *titles;
-	NSString *outCharacters;
 	CGSize buttonSize;
 }
 
 @synthesize delegate;
 @synthesize buttonInset;
+@synthesize titles;
+@synthesize outCharacters;
 
-// Super class's designated initializer
-- (id)initWithFrame:(CGRect)frame
+- (void)updateButtonsWithRow:(NSUInteger)r column:(NSUInteger)c titles:(NSArray *)t outCharacters:(NSString *)s
 {
-    self = [super initWithFrame:frame];
-    if (self) {
+	if (buttons) {
+		for (UIButton *aButton in buttons) {
+			[aButton removeFromSuperview];
+		}
+		[buttons removeAllObjects];
+	} else {
 		buttons = [NSMutableArray array];
-    }
-    return self;
-}
-
-- (id)initWithDelegate:(id<COINSKeyboardDelegate>)d Frame:(CGRect)frame row:(NSUInteger)r column:(NSUInteger)c titles:(NSArray *)t outCharacters:(NSString *)s
-{
-	self = [self initWithFrame:frame];
-	
-	if (self) {
-		if (t.count != s.length) {
-			return nil;
-		}
-		
-		self.frame = frame;
-		delegate = d;
-		row = r;
-		column = c;
-		titles = t;
-		outCharacters = s;
-		
-		buttonSize = CGSizeMake(self.frame.size.width / column, self.frame.size.height / row);
-		for (int i = 0; i < titles.count; i++) {
-			UIButton *aButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-			aButton.frame = CGRectMake((i % column) * buttonSize.width,
-									   (i / column) * buttonSize.height,
-									   buttonSize.width,
-									   buttonSize.height);
-			[aButton setTitle:titles[i] forState:UIControlStateNormal];
-			[aButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-			aButton.titleLabel.font = [UIFont fontWithName:@"Thonburi-Bold" size:buttonSize.width / 2];
-			aButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-
-			[buttons addObject:aButton];
-			
-			[self addSubview:aButton];
-		}
 	}
+	if (t.count != s.length) {
+		NSLog(@"button title count and out characters don't match!");
+	}
+	UIColor *backgroundColor = [UIColor blackColor];
+	UIColor *keyColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.0];
+	self.backgroundColor = backgroundColor;
+	row = r;
+	column = c;
+	titles = t;
+	outCharacters = s;
 	
-	return self;
-}
-
-+ (COINSKeyboard *)keyboardWithDelegate:(id<COINSKeyboardDelegate>)d Frame:(CGRect)f row:(NSUInteger)r column:(NSUInteger)c titles:(NSArray *)t outCharacters:(NSString *)s
-{
-	return [[COINSKeyboard alloc] initWithDelegate:d Frame:f row:r column:c titles:t outCharacters:s];
+	CGFloat buttonBorderWidth = 0.5;
+	UIEdgeInsets keyboardInset = UIEdgeInsetsMake(1.0 - buttonBorderWidth, // top
+												  1.0 - buttonBorderWidth, // left
+												  1.0 - buttonBorderWidth, // bottom
+												  1.0 - buttonBorderWidth); // right
+	buttonSize = CGSizeMake((self.frame.size.width - keyboardInset.left - keyboardInset.right) / column,
+							(self.frame.size.height - keyboardInset.top - keyboardInset.bottom) / row);
+	for (int i = 0; i < titles.count; i++) {
+		UIButton *aButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+		aButton.frame = CGRectMake((i % column) * buttonSize.width + keyboardInset.left,
+								   (i / column) * buttonSize.height + keyboardInset.top,
+								   buttonSize.width,
+								   buttonSize.height);
+		[aButton setTitle:titles[i] forState:UIControlStateNormal];
+		[aButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
+		aButton.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:buttonSize.width / 2];
+		aButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+		// set key color
+		if ([aButton.titleLabel.text isEqualToString:@"+"]
+			|| [aButton.titleLabel.text isEqualToString:@"-"]
+			|| [aButton.titleLabel.text isEqualToString:@"×"]
+			|| [aButton.titleLabel.text isEqualToString:@"÷"]
+			|| [aButton.titleLabel.text isEqualToString:@"="]) { // four arithmetic operator or equal
+			[aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+			aButton.backgroundColor = [UIColor colorWithRed:1.0 green:0.56 blue:0.0 alpha:1.0];
+		} else if ([aButton.titleLabel.text isEqualToString:@"0"]
+				   || [aButton.titleLabel.text isEqualToString:@"1"]
+				   || [aButton.titleLabel.text isEqualToString:@"2"]
+				   || [aButton.titleLabel.text isEqualToString:@"3"]
+				   || [aButton.titleLabel.text isEqualToString:@"4"]
+				   || [aButton.titleLabel.text isEqualToString:@"5"]
+				   || [aButton.titleLabel.text isEqualToString:@"6"]
+				   || [aButton.titleLabel.text isEqualToString:@"7"]
+				   || [aButton.titleLabel.text isEqualToString:@"8"]
+				   || [aButton.titleLabel.text isEqualToString:@"9"]
+				   ) { // numeral
+			[aButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+			aButton.backgroundColor = keyColor;
+		} else { // others
+			[aButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+			aButton.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0];
+		}
+		aButton.layer.borderWidth = buttonBorderWidth;
+		aButton.layer.borderColor = [backgroundColor CGColor];
+		
+		[buttons addObject:aButton];
+		
+		[self addSubview:aButton];
+	}
 }
 
 - (void)buttonPressed:(id)sender
@@ -118,7 +138,6 @@
 												bottomButton.frame.origin.y + buttonSize.height - topButton.frame.origin.y);
 	}
 }
-
 
 /*
 // Only override drawRect: if you perform custom drawing.

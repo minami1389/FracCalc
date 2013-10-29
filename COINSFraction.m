@@ -26,6 +26,28 @@ static int gcd(int a, int b)
 @synthesize denominator;
 @synthesize sign;
 
+- (id)initWith:(NSUInteger)s numerator:(NSInteger)n denominator:(NSInteger)d
+{
+	self = [super init];
+	
+	if (self) {
+		if (d == 0) {
+			NSLog(@"Divided by zero.");
+			return nil;
+		}
+		if (n == 0) {
+			sign = 1;
+		} else {
+			sign = s;
+		}
+		numerator = n;
+		denominator = d;
+		[COINSFraction reduction:self];
+	}
+	
+	return self;
+}
+
 + (id)fractionWith:(NSInteger)sign numerator:(NSUInteger)numerator denominator:(NSUInteger)denominator
 {
 	return [[COINSFraction alloc] initWith:sign numerator:numerator denominator:denominator];
@@ -104,31 +126,6 @@ static int gcd(int a, int b)
     }
     
 	return [COINSFraction fractionWith:s numerator:n denominator:d];
-}
-
-
-
-
-- (id)initWith:(NSUInteger)s numerator:(NSInteger)n denominator:(NSInteger)d
-{
-	self = [super init];
-	
-	if (self) {
-		if (d == 0) {
-			NSLog(@"Divided by zero.");
-			return nil;
-		}
-		if (n == 0) {
-			sign = 1;
-		} else {
-			sign = s;
-		}
-		numerator = n;
-		denominator = d;
-		[COINSFraction reduction:self];
-	}
-	
-	return self;
 }
 
 + (void)reduction:(COINSFraction *)A

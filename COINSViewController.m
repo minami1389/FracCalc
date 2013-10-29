@@ -14,146 +14,74 @@
 @end
 
 @implementation COINSViewController {
+	NSInteger turn;
+	
+	UILabel *firstInteger;
+	UILabel *secondInteger;
+	UILabel *thirdInteger;
+
 	NSMutableString *inputString;
 	NSMutableString *inString;
-    
-	CGSize appSize;
-    
-    UILabel *label;
-    
-
-    
+    UILabel *messageLabel;
 }
+
+@synthesize keyboard;
+
+@synthesize firstSignLabel, firstNumeratorLabel, firstVinculumView, firstDenominatorLabel;
+@synthesize firstOperatorLabel;
+@synthesize secondSignLabel, secondNumeratorLabel, secondVinculumView, secondDenominatorLabel;
+@synthesize firstEqualLabel;
+@synthesize thirdSignLabel, thirdNumeratorLabel, thirdVinculumView, thirdDenominatorLabel;
 
 - (void)viewDidLoad
 {
+	[super viewDidLoad];
+	
+	[self setNeedsStatusBarAppearanceUpdate];
+	
     turn = 0;
-    [super viewDidLoad];
+
 	inputString = [NSMutableString string];
     
     inString = [NSMutableString string];
+
+	keyboard.delegate = self;
     
-	appSize = CGSizeMake([UIScreen mainScreen].applicationFrame.size.width,
-						 [UIScreen mainScreen].applicationFrame.size.height);
+    firstInteger = [[UILabel alloc] initWithFrame:CGRectMake(4, 260, 120, 120)];
+    [self.view addSubview:firstInteger];
+    firstInteger.textAlignment = NSTextAlignmentCenter;
+    firstInteger.font = [UIFont systemFontOfSize:90];
+    firstInteger.adjustsFontSizeToFitWidth = YES;
+    firstInteger.backgroundColor = [UIColor clearColor];
+
 	
-	COINSFraction *x = [COINSFraction fractionWithString:@"-1/7"];
-	COINSFraction *y = [COINSFraction fractionWith:1 numerator:1 denominator:7];
+    secondInteger = [[UILabel alloc] initWithFrame:CGRectMake(236, 260, 120, 120)];
+    [self.view addSubview:secondInteger];
+    secondInteger.textAlignment = NSTextAlignmentCenter;
+    secondInteger.font = [UIFont systemFontOfSize:90];
+    secondInteger.adjustsFontSizeToFitWidth = YES;
+    secondInteger.backgroundColor = [UIColor clearColor];
 
-	NSLog(@"%@ + %@ = %@", x.stringRepresentation, y.stringRepresentation, [x add:y].stringRepresentation);
-	NSLog(@"%@ - %@ = %@", x.stringRepresentation, y.stringRepresentation, [x sub:y].stringRepresentation);
-	NSLog(@"%@ * %@ = %@", x.stringRepresentation, y.stringRepresentation, [x mul:y].stringRepresentation);
-	NSLog(@"%@ / %@ = %@", x.stringRepresentation, y.stringRepresentation, [x div:y].stringRepresentation);
-	
-	NSLog(@"%@ + %@ / %@ = %@", x.stringRepresentation, x.stringRepresentation, y.stringRepresentation, [x add:[x div:y]].stringRepresentation);
-	
-	NSArray *buttonTitles = @[@"AC", @"仮・帯",	@"(",	@")",
-						   @"C",	@"±",	@"÷",	@"×",
-						   @"7",	@"8",	@"9",	@"-",
-						   @"4",	@"5",	@"6",	@"+",
-						   @"1",	@"2",	@"3",	@"=",
-						   @"0",	@"分の",	@"分の",	@"="];
-	NSString *outCharacters = @"am()cs/*789-456+123=0bb=";
-	COINSKeyboard *keyboard = [COINSKeyboard keyboardWithDelegate:self Frame:CGRectMake(600, 45, 400, 700) row:6 column:4 titles:buttonTitles outCharacters:outCharacters];
-	NSArray *mergeInfo = @[@[@19, @23], @[@21, @22]];
-	[keyboard mergeButtons:mergeInfo];
-	[self.view addSubview:keyboard];
-	
-	
-    label = [UILabel alloc];
-    label = [label initWithFrame:CGRectMake(0, 500, 600, 100)];
-    label.font = [UIFont systemFontOfSize:70];
-    [self.view addSubview:label];
-    label.textAlignment = NSTextAlignmentCenter;
-    
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 600, 200)];
-    [self.view addSubview:title];
-    title.textAlignment = NSTextAlignmentCenter;
-    title.textColor = [UIColor whiteColor];
-    title.backgroundColor = [UIColor lightGrayColor];
-    title.shadowColor = [UIColor blackColor];
-    title.shadowOffset = CGSizeMake(1, 1);
-    title.font = [UIFont fontWithName:@"Optima-ExtraBlack" size:50];
-    title.text = @"Fraction Calculator";
-	
-    
-    
-    aa = [[UILabel alloc] initWithFrame:CGRectMake(4, 200, 120, 120)];
-    [self.view addSubview:aa];
-    aa.textAlignment = NSTextAlignmentCenter;
-    aa.font = [UIFont systemFontOfSize:90];
-    aa.adjustsFontSizeToFitWidth = YES;
+    thirdInteger = [[UILabel alloc] initWithFrame:CGRectMake(460, 265, 120, 120)];
+    [self.view addSubview:thirdInteger];
+    thirdInteger.textAlignment = NSTextAlignmentCenter;
+    thirdInteger.font = [UIFont systemFontOfSize:90];
+    thirdInteger.adjustsFontSizeToFitWidth = YES;
+    thirdInteger.backgroundColor = [UIColor clearColor];
+}
 
-    ab = [[UILabel alloc] initWithFrame:CGRectMake(120, 260, 120, 120)];
-    [self.view addSubview:ab];
-    ab.textAlignment = NSTextAlignmentCenter;
-    ab.font = [UIFont systemFontOfSize:90];
+- (void)viewDidAppear:(BOOL)animated
+{
+	if (self.interfaceOrientation == UIInterfaceOrientationPortrait
+		|| self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
+		[self didRotateFromInterfaceOrientation:UIInterfaceOrientationLandscapeLeft];
+	} else {
+		[self didRotateFromInterfaceOrientation:UIInterfaceOrientationPortrait];
+	}
+}
 
-    ac = [[UILabel alloc] initWithFrame:CGRectMake(236, 200, 120, 120)];
-    [self.view addSubview:ac];
-    ac.textAlignment = NSTextAlignmentCenter;
-    ac.font = [UIFont systemFontOfSize:90];
-    ac.adjustsFontSizeToFitWidth = YES;
-
-    ad = [[UILabel alloc] initWithFrame:CGRectMake(356, 260, 120, 120)];
-    [self.view addSubview:ad];
-    ad.textAlignment = NSTextAlignmentCenter;
-    ad.font = [UIFont systemFontOfSize:90];
-
-    ae = [[UILabel alloc] initWithFrame:CGRectMake(476, 200, 120, 120)];
-    [self.view addSubview:ae];
-    ae.textAlignment = NSTextAlignmentCenter;
-    ae.font = [UIFont systemFontOfSize:90];
-    ae.adjustsFontSizeToFitWidth = YES;
-    
-    ba = [[UILabel alloc] initWithFrame:CGRectMake(4, 320, 120, 120)];
-    [self.view addSubview:ba];
-    ba.textAlignment = NSTextAlignmentCenter;
-    ba.font = [UIFont systemFontOfSize:90];
-    ba.adjustsFontSizeToFitWidth = YES;
-    
-    bc = [[UILabel alloc] initWithFrame:CGRectMake(236, 320, 120, 120)];
-    [self.view addSubview:bc];
-    bc.textAlignment = NSTextAlignmentCenter;
-    bc.font = [UIFont systemFontOfSize:90];
-    bc.adjustsFontSizeToFitWidth = YES;
-
-    
-    be = [[UILabel alloc] initWithFrame:CGRectMake(476, 320, 120, 120)];
-    [self.view addSubview:be];
-    be.textAlignment = NSTextAlignmentCenter;
-    be.font = [UIFont systemFontOfSize:90];
-    be.adjustsFontSizeToFitWidth = YES;
-    
-    c1 = [[UILabel alloc] initWithFrame:CGRectMake(4, 318, 120, 4)];
-    [self.view addSubview:c1];
-    
-    c2 = [[UILabel alloc] initWithFrame:CGRectMake(236, 318, 120, 4)];
-    [self.view addSubview:c2];
-    
-    c3 = [[UILabel alloc] initWithFrame:CGRectMake(476, 318, 120, 4)];
-    [self.view addSubview:c3];
-    
-    center1 = [[UILabel alloc] initWithFrame:CGRectMake(4, 260, 120, 120)];
-    [self.view addSubview:center1];
-    center1.textAlignment = NSTextAlignmentCenter;
-    center1.font = [UIFont systemFontOfSize:90];
-    center1.adjustsFontSizeToFitWidth = YES;
-    center1.backgroundColor = [UIColor clearColor];
-
-    center2 = [[UILabel alloc] initWithFrame:CGRectMake(236, 260, 120, 120)];
-    [self.view addSubview:center2];
-    center2.textAlignment = NSTextAlignmentCenter;
-    center2.font = [UIFont systemFontOfSize:90];
-    center2.adjustsFontSizeToFitWidth = YES;
-    center2.backgroundColor = [UIColor clearColor];
-    
-    center3 = [[UILabel alloc] initWithFrame:CGRectMake(460, 265, 120, 120)];
-    [self.view addSubview:center3];
-    center3.textAlignment = NSTextAlignmentCenter;
-    center3.font = [UIFont systemFontOfSize:90];
-    center3.adjustsFontSizeToFitWidth = YES;
-    center3.backgroundColor = [UIColor clearColor];
-    
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
 }
 
 #pragma mark COINSKeyboardDelegate
@@ -161,7 +89,7 @@
 - (void)input:(unichar)c;
 {
     COINSFraction *z;
-    label.text = @"";
+    messageLabel.text = @"";
     NSRange allclear;
 
     [inputString appendFormat:@"%c",c];
@@ -257,14 +185,14 @@
 // 計算結果の表示(整数値かどうかによって場合分け)
         NSRange slash = [inputString rangeOfString:@"b"];
         if (slash.location == NSNotFound) {
-            center3.text = inputString;
+            thirdInteger.text = inputString;
         } else {
             NSArray *answer = [inputString componentsSeparatedByString:@"b"];
             NSString *n = answer[0];
             NSString *d = answer[1];
-            ae.text = n;
-            be.text = d;
-            c3.backgroundColor = [UIColor blackColor];
+            thirdNumeratorLabel.text = n;
+            thirdDenominatorLabel.text = d;
+            thirdVinculumView.hidden = NO;
             }
         }
 
@@ -279,74 +207,100 @@
 //AllClear
     if (c == 'a') {
         [inString replaceCharactersInRange:inStringRange withString:@""];
-        aa.text = @"";
-        ab.text = @"";
-        ac.text = @"";
-        ad.text = @"";
-        ae.text = @"";
-        ba.text = @"";
-        bc.text = @"";
-        be.text = @"";
-        center3.text = @"";
-        c1.backgroundColor = [UIColor whiteColor];
-        c2.backgroundColor = [UIColor whiteColor];
-        c3.backgroundColor = [UIColor whiteColor];
+        firstNumeratorLabel.text = @"";
+        firstOperatorLabel.text = @"";
+        secondNumeratorLabel.text = @"";
+        firstEqualLabel.text = @"";
+        thirdNumeratorLabel.text = @"";
+        firstDenominatorLabel.text = @"";
+        secondDenominatorLabel.text = @"";
+        thirdDenominatorLabel.text = @"";
+        thirdInteger.text = @"";
+		firstVinculumView.hidden = YES;
+		secondVinculumView.hidden = YES;
+		thirdVinculumView.hidden = YES;
         turn = 0;
-        
     } else if (turn == 0 && signal.location == NSNotFound) {   //左分母
-        ba.text = inString;
+        firstDenominatorLabel.text = inString;
         
     } else if (c == 'b' && turn == 0 && inStringRange.length > 1) {   //左括線
-        c1.backgroundColor = [UIColor blackColor];
+        firstVinculumView.hidden = NO;
         [inString replaceCharactersInRange:inStringRange withString:@""];
         turn++;
         
     } else if (turn == 1 && signal.location == NSNotFound) {   //左分子
-        aa.text = inString;
+        firstNumeratorLabel.text = inString;
         
     } else if (c == '+' && turn == 1 && inStringRange.length > 1) {   //演算子
-        ab.text = @"+";
+        firstOperatorLabel.text = @"+";
         [inString replaceCharactersInRange:inStringRange withString:@""];
         turn++;
     } else if (c == '-' && turn == 1 && inStringRange.length > 1) {
-        ab.text = @"-";
+        firstOperatorLabel.text = @"-";
         [inString replaceCharactersInRange:inStringRange withString:@""];
         turn++;
     } else if (c == '*' && turn == 1 && inStringRange.length > 1) {
-        ab.text = @"×";
+        firstOperatorLabel.text = @"×";
         [inString replaceCharactersInRange:inStringRange withString:@""];
         turn++;
     } else if (c == '/' && turn == 1 && inStringRange.length > 1) {
-        ab.text = @"÷";
+        firstOperatorLabel.text = @"÷";
         [inString replaceCharactersInRange:inStringRange withString:@""];
         turn++;
         
     } else if (turn == 2 && signal.location == NSNotFound) {   //右分母
-        bc.text = inString;
+        secondDenominatorLabel.text = inString;
         
     } else if (c == 'b' && turn == 2) {   //右括線
-        c2.backgroundColor = [UIColor blackColor];
+        secondVinculumView.hidden = NO;
         [inString replaceCharactersInRange:inStringRange withString:@""];
         turn++;
         
     } else if (turn == 3 && signal.location == NSNotFound) {   //右分子
-        ac.text = inString;
+        secondNumeratorLabel.text = inString;
         
     } else if (c == '=' && turn == 3) {   //イコール
-        ad.text = @"=";
+        firstEqualLabel.text = @"=";
         
     } else if (c == '(' && turn == 3) {
-        ad.text = @"=";
+        firstEqualLabel.text = @"=";
         turn++;
     } else {   //その他
-        label.text = @"入力ミスです";
+        messageLabel.text = @"入力ミスです";
     }
 
     NSLog(@"inputString: %@", inputString);
     NSLog(@"inString: %@", inString);
+}
 
-
-
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+	if (fromInterfaceOrientation == UIInterfaceOrientationLandscapeLeft
+		|| fromInterfaceOrientation == UIInterfaceOrientationLandscapeRight) {
+		NSArray *buttonTitles = @[@"仮・帯", @"仮・帯",	@"±",
+								  @"(",	@")",	@"±",
+								  @"AC",@"×",	@"÷",
+								  @"C",	@"+",	@"-",
+								  @"7",	@"8",	@"9",
+								  @"4",	@"5",	@"6",
+								  @"1",	@"2",	@"3",
+								  @"0",	@"分の",	@"="];
+		NSString *outCharacters = @"mms()sa*/c+-7894561230b=";
+		[keyboard updateButtonsWithRow:8 column:3 titles:buttonTitles outCharacters:outCharacters];
+		NSArray *mergeInfo = @[@[@0, @1], @[@2, @5]];
+		[keyboard mergeButtons:mergeInfo];
+	} else {
+		NSArray *buttonTitles = @[@"AC", @"(",	@")",	@"±",
+								  @"C",	@"仮・帯",	@"仮・帯",	@"÷",
+								  @"7",	@"8",	@"9",	@"×",
+								  @"4",	@"5",	@"6",	@"-",
+								  @"1",	@"2",	@"3",	@"+",
+								  @"0",	@"分の",	@"分の",	@"="];
+		NSString *outCharacters = @"a()scmm/789*456-123+0bb=";
+		[keyboard updateButtonsWithRow:6 column:4 titles:buttonTitles outCharacters:outCharacters];
+		NSArray *mergeInfo = @[@[@5, @6],@[@21, @22]];
+		[keyboard mergeButtons:mergeInfo];
+	}
 }
 
 - (void)didReceiveMemoryWarning

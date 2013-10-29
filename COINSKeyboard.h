@@ -28,11 +28,11 @@
 @property id<COINSKeyboardDelegate> delegate;
 @property UIEdgeInsets buttonInset;
 
-// Designated initializer
-- (id)initWithDelegate:(id<COINSKeyboardDelegate>)d Frame:(CGRect)f row:(NSUInteger)r column:(NSUInteger)c titles:(NSArray *)t outCharacters:(NSString *)s;
-+ (COINSKeyboard *)keyboardWithDelegate:(id<COINSKeyboardDelegate>)d Frame:(CGRect)frame row:(NSUInteger)r column:(NSUInteger)c titles:(NSArray *)t outCharacters:(NSString *)s;
-- (void)mergeButtons:(NSArray *)mergeInfo;
+@property NSArray *titles;
+@property NSString *outCharacters;
 
+- (void)updateButtonsWithRow:(NSUInteger)r column:(NSUInteger)c titles:(NSArray *)t outCharacters:(NSString *)s;
+- (void)mergeButtons:(NSArray *)mergeInfo;
 
 @end
 
