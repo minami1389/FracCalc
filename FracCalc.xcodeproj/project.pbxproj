@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		435AEB6118208867002A6AB8 /* COINSStateContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 435AEB6018208867002A6AB8 /* COINSStateContext.m */; };
 		E9AA34E317EFD69E00691B94 /* COINSFraction.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AA34DC17EFD69E00691B94 /* COINSFraction.m */; };
 		E9AA34E417EFD69E00691B94 /* COINSKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AA34DE17EFD69E00691B94 /* COINSKeyboard.m */; };
 		E9AA34E617EFD69E00691B94 /* COINSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AA34E217EFD69E00691B94 /* COINSViewController.m */; };
@@ -24,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		435AEB5F18208867002A6AB8 /* COINSStateContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = COINSStateContext.h; sourceTree = "<group>"; };
+		435AEB6018208867002A6AB8 /* COINSStateContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = COINSStateContext.m; sourceTree = "<group>"; };
 		E9AA34DB17EFD69E00691B94 /* COINSFraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = COINSFraction.h; path = ../COINSFraction.h; sourceTree = "<group>"; };
 		E9AA34DC17EFD69E00691B94 /* COINSFraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = COINSFraction.m; path = ../COINSFraction.m; sourceTree = "<group>"; };
 		E9AA34DD17EFD69E00691B94 /* COINSKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = COINSKeyboard.h; path = ../COINSKeyboard.h; sourceTree = "<group>"; };
@@ -61,9 +64,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		435AEB5E182087AA002A6AB8 /* StateMachine */ = {
+			isa = PBXGroup;
+			children = (
+				435AEB6218208872002A6AB8 /* States */,
+				435AEB5F18208867002A6AB8 /* COINSStateContext.h */,
+				435AEB6018208867002A6AB8 /* COINSStateContext.m */,
+			);
+			name = StateMachine;
+			sourceTree = "<group>";
+		};
+		435AEB6218208872002A6AB8 /* States */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = States;
+			sourceTree = "<group>";
+		};
 		E9AA34E717EFD7E300691B94 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				435AEB5E182087AA002A6AB8 /* StateMachine */,
 				E9AA34DB17EFD69E00691B94 /* COINSFraction.h */,
 				E9AA34DC17EFD69E00691B94 /* COINSFraction.m */,
 			);
@@ -221,6 +242,7 @@
 				E9DFD0DE17E42A83008E753E /* COINSAppDelegate.m in Sources */,
 				E9AA34E317EFD69E00691B94 /* COINSFraction.m in Sources */,
 				E9AA34E417EFD69E00691B94 /* COINSKeyboard.m in Sources */,
+				435AEB6118208867002A6AB8 /* COINSStateContext.m in Sources */,
 				E9AA34E617EFD69E00691B94 /* COINSViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
