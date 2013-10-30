@@ -60,7 +60,7 @@
 #pragma mark COINSKeyboardDelegate
 
 - (void)input:(unichar)c;
-{
+{ // parse inputString every time when c is input
     COINSFraction *thirdFraction;
     messageLabel.text = @"";
     NSRange wholeRange;
@@ -256,28 +256,26 @@
 {
 	if (fromInterfaceOrientation == UIInterfaceOrientationLandscapeLeft
 		|| fromInterfaceOrientation == UIInterfaceOrientationLandscapeRight) {
-		NSArray *buttonTitles = @[@"仮・帯", @"仮・帯",	@"±",
-								  @"(",	@")",	@"±",
-								  @"AC",@"×",	@"÷",
+		NSArray *buttonTitles = @[@"AC",@"AC",	@"±",
+								  @"C",	@"×",	@"÷",
 								  @"C",	@"+",	@"-",
 								  @"7",	@"8",	@"9",
 								  @"4",	@"5",	@"6",
 								  @"1",	@"2",	@"3",
 								  @"0",	@"分の",	@"="];
-		NSString *outCharacters = @"mms()sa*/c+-7894561230b=";
-		[keyboard updateButtonsWithRow:8 column:3 titles:buttonTitles outCharacters:outCharacters];
-		NSArray *mergeInfo = @[@[@0, @1], @[@2, @5]];
+		NSString *outCharacters = @"aasc*/c+-7894561230b=";
+		[keyboard updateButtonsWithRow:7 column:3 titles:buttonTitles outCharacters:outCharacters];
+		NSArray *mergeInfo = @[@[@0, @1], @[@3, @6]];
 		[keyboard mergeButtons:mergeInfo];
 	} else {
-		NSArray *buttonTitles = @[@"AC", @"(",	@")",	@"±",
-								  @"C",	@"仮・帯",	@"仮・帯",	@"÷",
+		NSArray *buttonTitles = @[@"AC",@"C",	@"±",	@"÷",
 								  @"7",	@"8",	@"9",	@"×",
 								  @"4",	@"5",	@"6",	@"-",
 								  @"1",	@"2",	@"3",	@"+",
 								  @"0",	@"分の",	@"分の",	@"="];
-		NSString *outCharacters = @"a()scmm/789*456-123+0bb=";
-		[keyboard updateButtonsWithRow:6 column:4 titles:buttonTitles outCharacters:outCharacters];
-		NSArray *mergeInfo = @[@[@5, @6],@[@21, @22]];
+		NSString *outCharacters = @"acs/789*456-123+0bb=";
+		[keyboard updateButtonsWithRow:5 column:4 titles:buttonTitles outCharacters:outCharacters];
+		NSArray *mergeInfo = @[@[@17, @18]];
 		[keyboard mergeButtons:mergeInfo];
 	}
 }
