@@ -12,13 +12,13 @@
 
 @property NSUInteger numerator;
 @property NSUInteger denominator;
-@property NSInteger	 sign;
+@property NSInteger	 sign; // 1 or -1
 
 /* Create fraction */
-// Designated initializer
+/// Designated initializer
 - (id)initWith:(NSUInteger)s numerator:(NSInteger)n denominator:(NSInteger)d;
 + (id)fractionWith:(NSInteger)sign numerator:(NSUInteger)numerator denominator:(NSUInteger)denominator;
-+ (id)fractionWithString:(NSString *)string;
++ (id)fractionWithString:(NSString *)string; // string may be like -2/3, 8/9 etc.
 + (id)MixedfractionWithString:(NSString *)string;
 
 
