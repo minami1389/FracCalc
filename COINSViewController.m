@@ -14,8 +14,6 @@
 @end
 
 @implementation COINSViewController {
-	NSInteger turn;
-	
 	NSMutableString *inputHistory;
 	NSMutableString *inString;
     NSMutableString *check;
@@ -40,42 +38,9 @@
 
 - (void)viewDidLoad
 {
-    turn = 0;
-    [super viewDidLoad];
-	inputString = [NSMutableString string];
-    
-    inString = [NSMutableString string];
-    check = [NSMutableString string];
-    lde = [NSMutableString string];
-    lnu = [NSMutableString string];
-    rde = [NSMutableString string];
-    rnu = [NSMutableString string];
-
-    
-	appSize = CGSizeMake([UIScreen mainScreen].applicationFrame.size.width,
-						 [UIScreen mainScreen].applicationFrame.size.height);
+	[super viewDidLoad];
 	
-	COINSFraction *x = [COINSFraction fractionWithString:@"-1/7"];
-	COINSFraction *y = [COINSFraction fractionWith:1 numerator:1 denominator:7];
-
-	NSLog(@"%@ + %@ = %@", x.stringRepresentation, y.stringRepresentation, [x add:y].stringRepresentation);
-	NSLog(@"%@ - %@ = %@", x.stringRepresentation, y.stringRepresentation, [x sub:y].stringRepresentation);
-	NSLog(@"%@ * %@ = %@", x.stringRepresentation, y.stringRepresentation, [x mul:y].stringRepresentation);
-	NSLog(@"%@ / %@ = %@", x.stringRepresentation, y.stringRepresentation, [x div:y].stringRepresentation);
-	
-	NSLog(@"%@ + %@ / %@ = %@", x.stringRepresentation, x.stringRepresentation, y.stringRepresentation, [x add:[x div:y]].stringRepresentation);
-	
-	NSArray *buttonTitles = @[@"AC", @"AC",	@"C",	@"÷",
-						   @"7",	@"8",	@"9",	@"×",
-						   @"4",	@"5",	@"6",	@"-",
-						   @"1",	@"2",	@"3",	@"+",
-						   @"0",	@"=",	@"=",	@"=",
-						   @"分の",	@"分の",	@"分の",	@"分の"];
-	NSString *outCharacters = @"aac/789*456-123+0===bbbb";
-	COINSKeyboard *keyboard = [COINSKeyboard keyboardWithDelegate:self Frame:CGRectMake(600, 45, 400, 700) row:6 column:4 titles:buttonTitles outCharacters:outCharacters];
-	NSArray *mergeInfo = @[@[@0, @1], @[@17, @18, @19], @[@20, @21, @22, @23]];
-	[keyboard mergeButtons:mergeInfo];
-	[self.view addSubview:keyboard];
+	[self setNeedsStatusBarAppearanceUpdate];
 	
     turn = 0;
 	
@@ -102,271 +67,54 @@
 #pragma mark COINSKeyboardDelegate
 
 - (void)input:(unichar)c;
-{
-    if (turn == 4 && c != 'a') {
-        label.text = @"ACを押してね";
-    } else {
-    
-    label.text = @"";
-    COINSFraction *z;
-   
-    [inputString appendFormat:@"%c",c];
-    [inString appendFormat:@"%c",c];
-    [check appendFormat:@"%c", c];
-    NSRange allclear = NSMakeRange(0, inputString.length);
-    
-// 最終計算
-    if (c == '=' && turn == 3) {
-        
-// 左、演算子、右の分割
-        NSMutableString *left;
-        NSMutableString *right;
-        NSArray *com = [inputString componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"+-*/"]];
-                left = com[0];
-                right = com[1];
-        
-       
-        
-// 演算子の識別
-        NSInteger number;
-        NSRange symbol = [inputString rangeOfString:@"+"];
-        if (symbol.length == 1) {
-            number = 1;
-        }
-        symbol = [inputString rangeOfString:@"-"];
-        if (symbol.length == 1) {
-            number = 2;
-        }
-        symbol = [inputString rangeOfString:@"*"];
-        if (symbol.length == 1) {
-            number = 3;
-        }
-        symbol = [inputString rangeOfString:@"/"];
-        if (symbol.length == 1) {
-            number = 4;
-        }
-        
-        
-// Stringから分数を作成(帯分数とそれ以外を場合分け)
-        COINSFraction *l;
-        COINSFraction *r;
-            
-        NSRange s = [left rangeOfString:@"m"];
-        if (s.location == NSNotFound) {
-            l = [COINSFraction fractionWithString:left];
-        } else {
-            l = [COINSFraction MixedfractionWithString:left];
-        }
-            
-        s = [right rangeOfString:@"m"];
-        if (s.location == NSNotFound) {
-            r = [COINSFraction fractionWithString:right];
-        } else {
-            r = [COINSFraction MixedfractionWithString:right];
-        }
-        
-        
-// 計算(演算子によって場合分け)
-        switch (number) {
-            case 1:
-                z = [COINSFraction add:l to:r];
-                break;
-                
-            case 2:
-                z = [COINSFraction subtract:r from:l];
-                break;
-                    
-            case 3:
-                z = [COINSFraction multiply:l by:r];
-                break;
-                
-            case 4:
-                z = [COINSFraction divide:l by:r];
-                break;
-                
-            default:
-                break;
-            }
-        
-        NSRange range = NSMakeRange(0, inputString.length);
-        [inputString replaceCharactersInRange:range withString:z.stringRepresentation];
-        
-        
-// 計算結果の表示(整数値かどうかによって場合分け)
-        NSRange slash = [inputString rangeOfString:@"b"];
-        if (slash.location == NSNotFound) {
-            center3.text = inputString;
-            ain = inputString;
-        } else {
-            NSArray *answer = [inputString componentsSeparatedByString:@"b"];
-            NSString *n = answer[0];
-            NSString *d = answer[1];
-            ae.text = n;
-            be.text = d;
-            c3.backgroundColor = [UIColor blackColor];
-        }
-    }
+{ // parse inputString every time when c is input
 
-    
-// 計算過程の表示
-    
-    NSCharacterSet *signalset = [NSCharacterSet characterSetWithCharactersInString:@"+-*/b="];
-    NSRange signal = [inString rangeOfCharacterFromSet:signalset];
-    NSRange inStringRange = NSMakeRange(0, inString.length);
-    
-//AllClear
-    if (c == 'a') {
-    
-        [inputString replaceCharactersInRange:allclear withString:@""];
-        [inString replaceCharactersInRange:inStringRange withString:@""];
-        aa.text = @"";
-        ab.text = @"";
-        ac.text = @"";
-        ad.text = @"";
-        ae.text = @"";
-        ba.text = @"";
-        bc.text = @"";
-        be.text = @"";
-        center3.text = @"";
-        c1.backgroundColor = [UIColor whiteColor];
-        c2.backgroundColor = [UIColor whiteColor];
-        c3.backgroundColor = [UIColor whiteColor];
+	/* 
+	 基本方針
+	 マス目を順次埋めていく処理を時系列順に書いていく
+	 */
+	
+	// 今回入力された文字を入力履歴に追加する
+	[inputHistory appendFormat:@"%c", c];
+	
+	
+	
+	// 毎回再描画するため、前回のラベルや括線を消去する。
+	firstSignLabel.text = @"";
+	firstNumeratorLabel.text = @"";
+	firstDenominatorLabel.text = @"";
+	firstIntegerLabel.text = @"";
+	
+	firstOperatorLabel.text = @"";
+	
+	secondSignLabel.text = @"";
+	secondNumeratorLabel.text = @"";
+	secondDenominatorLabel.text = @"";
+	secondIntegerLabel.text = @"";
+	
+	firstEqualLabel.text = @"";
+	
+	thirdSignLabel.text = @"";
+	thirdNumeratorLabel.text = @"";
+	thirdDenominatorLabel.text = @"";
+	thirdIntegerLabel.text = @"";
+	
+	firstVinculumView.hidden = YES;
+	secondVinculumView.hidden = YES;
+	thirdVinculumView.hidden = YES;
+	
+	if (c == 'a') { // All Clear
+        [inputHistory deleteCharactersInRange:NSMakeRange(0, inputHistory.length)];
         turn = 0;
-        [lde deleteCharactersInRange:NSMakeRange(0, lde.length)];
-        [lnu deleteCharactersInRange:NSMakeRange(0, lde.length)];
-        [rde deleteCharactersInRange:NSMakeRange(0, lde.length)];
-        [rnu deleteCharactersInRange:NSMakeRange(0, lde.length)];
-    
-    } else if (c == 'c') {
-        
-        if (inputString.length > 1) {
-            
-            NSRange c = NSMakeRange(inputString.length-2, 2);
-            [inputString replaceCharactersInRange:c withString:@""];
-
-            if (turn == 0 && inString.length > 1) {
-                [inString deleteCharactersInRange:NSMakeRange(inString.length-2, 2)];
-                ba.text = inString;
-            } else if (turn ==  1 && inString.length == 1) {
-                c1.backgroundColor = [UIColor whiteColor];
-                [inString deleteCharactersInRange:NSMakeRange(0, 1)];
-                turn--;
-                [inString appendString:lde];
-                NSRange ldeRan = NSMakeRange(0, lde.length);
-                [lde deleteCharactersInRange:ldeRan];
-            } else if (turn == 1 && inString.length > 1) {
-                [inString deleteCharactersInRange:NSMakeRange(inString.length-2, 2)];
-                aa.text = inString;
-            } else if (turn == 2 && inString.length == 1) {
-                ab.text = @"";
-                [inString deleteCharactersInRange:NSMakeRange(0, 1)];
-                turn--;
-                [inString appendString:lnu];
-                NSRange lnuRan = NSMakeRange(0, lnu.length);
-                [lnu deleteCharactersInRange:lnuRan];
-            } else if (turn == 2 && inString.length > 1) {
-                [inString deleteCharactersInRange:NSMakeRange(inString.length-2, 2)];
-                bc.text = inString;
-            } else if (turn == 3 && inString.length == 1) {
-                c2.backgroundColor = [UIColor whiteColor];
-                [inString deleteCharactersInRange:NSMakeRange(0, 1)];
-                turn--;
-                [inString appendString:rde];
-                NSRange rdeRan = NSMakeRange(0, rde.length);
-                [rde deleteCharactersInRange:rdeRan];
-        
-            } else if (turn == 3 && inString.length > 1) {
-                [inString deleteCharactersInRange:NSMakeRange(inString.length-2, 2)];
-                ac.text = inString;
-            }
-            
-        } else {
-            label.text = @"未入力";
-        }
-        
-        
-    } else if (turn == 0 && signal.location == NSNotFound && c != '0') {   //左分母
-        ba.text = inString;
-        
-    } else if (c == 'b' && turn == 0 && inputString.length > 1) {   //左括線
-        c1.backgroundColor = [UIColor blackColor];
-        [inString deleteCharactersInRange:NSMakeRange(inString.length-1, 1)];
-        [lde appendString:inString];
-        NSRange inStRan = NSMakeRange(0, inString.length);
-        [inString replaceCharactersInRange:inStRan withString:@""];
-        turn++;
-        
-    } else if (turn == 1 && signal.location == NSNotFound) {   //左分子
-        aa.text = inString;
-        
-    } else if (c == '+' && turn == 1 && inStringRange.length > 1) {   //演算子
-        ab.text = @"+";
-        [inString deleteCharactersInRange:NSMakeRange(inString.length-1, 1)];
-        [lnu appendString:inString];
-        inStringRange = NSMakeRange(0, inString.length);
-        [inString replaceCharactersInRange:inStringRange withString:@""];
-        turn++;
-    } else if (c == '-' && turn == 1 && inStringRange.length > 1) {
-        ab.text = @"-";
-        [inString deleteCharactersInRange:NSMakeRange(inString.length-1, 1)];
-        [lnu appendString:inString];
-        inStringRange = NSMakeRange(0, inString.length);
-        [inString replaceCharactersInRange:inStringRange withString:@""];
-        turn++;
-    } else if (c == '*' && turn == 1 && inStringRange.length > 1) {
-        ab.text = @"×";
-        [inString deleteCharactersInRange:NSMakeRange(inString.length-1, 1)];
-        [lnu appendString:inString];
-        inStringRange = NSMakeRange(0, inString.length);
-        [inString replaceCharactersInRange:inStringRange withString:@""];
-        turn++;
-    } else if (c == '/' && turn == 1 && inStringRange.length > 1) {
-        ab.text = @"÷";
-        [inString deleteCharactersInRange:NSMakeRange(inString.length-1, 1)];
-        [lnu appendString:inString];
-        inStringRange = NSMakeRange(0, inString.length);
-        [inString replaceCharactersInRange:inStringRange withString:@""];
-        turn++;
-        
-    } else if (turn == 2 && signal.location == NSNotFound && c != '0') {   //右分母
-        bc.text = inString;
-        
-    } else if (c == 'b' && turn == 2) {   //右括線
-        c2.backgroundColor = [UIColor blackColor];
-        [inString deleteCharactersInRange:NSMakeRange(inString.length-1, 1)];
-        [rde appendString:inString];
-        inStringRange = NSMakeRange(0, inString.length);
-        [inString replaceCharactersInRange:inStringRange withString:@""];
-        turn++;
-        
-    } else if (turn == 3 && signal.location == NSNotFound) {   //右分子
-        ac.text = inString;
-        
-    } else if (c == '=' && turn == 3) {   //イコール
-        ad.text = @"=";
-        [inString deleteCharactersInRange:NSMakeRange(inString.length-1, 1)];
-        lnu = inString;
-        turn++;
-        
-    }else {   //その他
-        label.text = @"入力ミスです";
-        NSRange inputStRange = NSMakeRange(inputString.length-1, 1);
-        NSRange inStRange = NSMakeRange(inString.length-1, 1);
-        [inputString deleteCharactersInRange:inputStRange];
-        [inString deleteCharactersInRange:inStRange];
-    }
-    }
-
-    NSLog(@"inputString: %@", inputString);
-    NSLog(@"inString: %@", inString);
-    NSLog(@"check: %@", check);
-    NSLog(@"turn: %d", turn);
-    NSLog(@"lde: %@",lde);
-    NSLog(@"lnu: %@",lnu);
-    NSLog(@"rde: %@",rde);
-    NSLog(@"rnu: %@",rnu);
-
-
+	} else if (c == 'c') { // Clear
+		if (inputHistory.length > 1) { // 自分自身と直前の一文字を削除する
+			[inputHistory deleteCharactersInRange:NSMakeRange(inputHistory.length - 2, 2)];
+		} else { // １文字も入力履歴がない場合は全消去する
+			[inputHistory deleteCharactersInRange:NSMakeRange(0, inputHistory.length)];
+		}
+	}
+	
+	NSLog(@"inputHistory: %@", inputHistory);
 
 	// １番目の数の符号を取得する
 	// 先頭から読んでいって、符号以外の文字が来るまで文字を取得し続ける
