@@ -26,13 +26,19 @@
     UILabel *center1;
     UILabel *center2;
     UILabel *center3;
+    NSString *lde;
+    NSString *lnu;
+    NSString *rde;
+    NSString *rnu;
+    NSString *ade;
+    NSString *anu;
+    NSString *ain;
 }
 
 @end
 
 
 /*
-・入力ミスから計算に戻る
 ・clearボタン
 ・問題
 */

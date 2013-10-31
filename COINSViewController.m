@@ -46,15 +46,15 @@
 	
 	NSLog(@"%@ + %@ / %@ = %@", x.stringRepresentation, x.stringRepresentation, y.stringRepresentation, [x add:[x div:y]].stringRepresentation);
 	
-	NSArray *buttonTitles = @[@"AC", @"仮・帯",	@"(",	@")",
-						   @"C",	@"±",	@"÷",	@"×",
-						   @"7",	@"8",	@"9",	@"-",
-						   @"4",	@"5",	@"6",	@"+",
-						   @"1",	@"2",	@"3",	@"=",
-						   @"0",	@"分の",	@"分の",	@"="];
-	NSString *outCharacters = @"am()cs/*789-456+123=0bb=";
+	NSArray *buttonTitles = @[@"AC", @"AC",	@"C",	@"÷",
+						   @"7",	@"8",	@"9",	@"×",
+						   @"4",	@"5",	@"6",	@"-",
+						   @"1",	@"2",	@"3",	@"+",
+						   @"0",	@"分の",	@"分の",	@"分の",
+						   @"=",	@"=",	@"=",	@"="];
+	NSString *outCharacters = @"aac/789*456-123+0bbb====";
 	COINSKeyboard *keyboard = [COINSKeyboard keyboardWithDelegate:self Frame:CGRectMake(600, 45, 400, 700) row:6 column:4 titles:buttonTitles outCharacters:outCharacters];
-	NSArray *mergeInfo = @[@[@19, @23], @[@21, @22]];
+	NSArray *mergeInfo = @[@[@0, @1], @[@17, @18, @19], @[@20, @21, @22, @23]];
 	[keyboard mergeButtons:mergeInfo];
 	[self.view addSubview:keyboard];
 	
@@ -160,9 +160,11 @@
 
 - (void)input:(unichar)c;
 {
+    label.text = @"";
     COINSFraction *z;
     label.text = @"";
     NSRange allclear;
+
 
     [inputString appendFormat:@"%c",c];
     allclear = NSMakeRange(0, inputString.length);
@@ -258,6 +260,7 @@
         NSRange slash = [inputString rangeOfString:@"b"];
         if (slash.location == NSNotFound) {
             center3.text = inputString;
+            ain = inputString;
         } else {
             NSArray *answer = [inputString componentsSeparatedByString:@"b"];
             NSString *n = answer[0];
@@ -265,8 +268,10 @@
             ae.text = n;
             be.text = d;
             c3.backgroundColor = [UIColor blackColor];
-            }
+            anu = n;
+            ade = d;
         }
+    }
 
     
 // 計算過程の表示
@@ -293,11 +298,24 @@
         c3.backgroundColor = [UIColor whiteColor];
         turn = 0;
         
-    } else if (turn == 0 && signal.location == NSNotFound) {   //左分母
+    } else if (c == 'c') {
+        if (turn == 0 && inString.length > 0) {
+            [inString deleteCharactersInRange:NSMakeRange(inString.length-2, 2)];
+            ba.text = inString;
+        } else if (turn ==  1 && inString.length == 1) {
+            c1.backgroundColor = [UIColor whiteColor];
+            [inString deleteCharactersInRange:NSMakeRange(inString.length-1, 1)];
+            turn--;
+        }
+        
+        
+    }else if (turn == 0 && signal.location == NSNotFound && c != '0') {   //左分母
         ba.text = inString;
         
-    } else if (c == 'b' && turn == 0 && inStringRange.length > 1) {   //左括線
+    } else if (c == 'b' && turn == 0 && inputString.length > 1) {   //左括線
         c1.backgroundColor = [UIColor blackColor];
+        [inString deleteCharactersInRange:NSMakeRange(inString.length-1, 1)];
+        lde = inString;
         [inString replaceCharactersInRange:inStringRange withString:@""];
         turn++;
         
@@ -306,26 +324,36 @@
         
     } else if (c == '+' && turn == 1 && inStringRange.length > 1) {   //演算子
         ab.text = @"+";
+        [inString deleteCharactersInRange:NSMakeRange(inString.length-1, 1)];
+        lnu = inString;
         [inString replaceCharactersInRange:inStringRange withString:@""];
         turn++;
     } else if (c == '-' && turn == 1 && inStringRange.length > 1) {
         ab.text = @"-";
+        [inString deleteCharactersInRange:NSMakeRange(inString.length-1, 1)];
+        lnu = inString;
         [inString replaceCharactersInRange:inStringRange withString:@""];
         turn++;
     } else if (c == '*' && turn == 1 && inStringRange.length > 1) {
         ab.text = @"×";
+        [inString deleteCharactersInRange:NSMakeRange(inString.length-1, 1)];
+        lnu = inString;
         [inString replaceCharactersInRange:inStringRange withString:@""];
         turn++;
     } else if (c == '/' && turn == 1 && inStringRange.length > 1) {
         ab.text = @"÷";
+        [inString deleteCharactersInRange:NSMakeRange(inString.length-1, 1)];
+        lnu = inString;
         [inString replaceCharactersInRange:inStringRange withString:@""];
         turn++;
         
-    } else if (turn == 2 && signal.location == NSNotFound) {   //右分母
+    } else if (turn == 2 && signal.location == NSNotFound && c != '0') {   //右分母
         bc.text = inString;
         
     } else if (c == 'b' && turn == 2) {   //右括線
         c2.backgroundColor = [UIColor blackColor];
+        [inString deleteCharactersInRange:NSMakeRange(inString.length-1, 1)];
+        rde = inString;
         [inString replaceCharactersInRange:inStringRange withString:@""];
         turn++;
         
@@ -334,12 +362,15 @@
         
     } else if (c == '=' && turn == 3) {   //イコール
         ad.text = @"=";
+        [inString deleteCharactersInRange:NSMakeRange(inString.length-1, 1)];
+        lnu = inString;
         
-    } else if (c == '(' && turn == 3) {
-        ad.text = @"=";
-        turn++;
     } else {   //その他
         label.text = @"入力ミスです";
+        NSRange inputStRange = NSMakeRange(inputString.length-1, 1);
+        NSRange inStRange = NSMakeRange(inString.length-1, 1);
+        [inputString deleteCharactersInRange:inputStRange];
+        [inString deleteCharactersInRange:inStRange];
     }
 
     NSLog(@"inputString: %@", inputString);
