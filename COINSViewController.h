@@ -26,13 +26,13 @@
     UILabel *center1;
     UILabel *center2;
     UILabel *center3;
-    NSString *lde;
-    NSString *lnu;
-    NSString *rde;
-    NSString *rnu;
-    NSString *ade;
-    NSString *anu;
-    NSString *ain;
+    NSMutableString *lde;
+    NSMutableString *lnu;
+    NSMutableString *rde;
+    NSMutableString *rnu;
+    NSMutableString *ade;
+    NSMutableString *anu;
+    NSMutableString *ain;
 }
 
 @end
