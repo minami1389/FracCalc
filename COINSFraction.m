@@ -26,7 +26,7 @@ static int gcd(int a, int b)
 @synthesize denominator;
 @synthesize sign;
 
-- (id)initWith:(NSUInteger)s numerator:(NSInteger)n denominator:(NSInteger)d
+- (id)initWithSign:(NSUInteger)s numerator:(NSInteger)n denominator:(NSInteger)d
 {
 	self = [super init];
 	
@@ -48,9 +48,9 @@ static int gcd(int a, int b)
 	return self;
 }
 
-+ (id)fractionWith:(NSInteger)sign numerator:(NSUInteger)numerator denominator:(NSUInteger)denominator
++ (id)fractionWithSign:(NSInteger)sign numerator:(NSUInteger)numerator denominator:(NSUInteger)denominator
 {
-	return [[COINSFraction alloc] initWith:sign numerator:numerator denominator:denominator];
+	return [[COINSFraction alloc] initWithSign:sign numerator:numerator denominator:denominator];
 }
 
 + (id)fractionWithString:(NSString *)string
@@ -72,12 +72,12 @@ static int gcd(int a, int b)
 	
     
 	// Get the numerator and the denominator.
-    NSRange search = [string rangeOfString:@"b"];
+    NSRange search = [string rangeOfString:@"/"];
     if (search.location == NSNotFound) {
         n = [string integerValue];
         d = 1;
     } else {
-        NSArray *components = [string componentsSeparatedByString:@"b"];
+        NSArray *components = [string componentsSeparatedByString:@"/"];
         if (components.count == 2) {
             n = [((NSString *)(components[1])) integerValue];
             d = [((NSString *)(components[0])) integerValue];
@@ -86,7 +86,7 @@ static int gcd(int a, int b)
         }
     }
 
-	return [COINSFraction fractionWith:s numerator:n denominator:d];
+	return [COINSFraction fractionWithSign:s numerator:n denominator:d];
 }
 
 
@@ -125,7 +125,7 @@ static int gcd(int a, int b)
         }
     }
     
-	return [COINSFraction fractionWith:s numerator:n denominator:d];
+	return [COINSFraction fractionWithSign:s numerator:n denominator:d];
 }
 
 + (void)reduction:(COINSFraction *)A
@@ -148,25 +148,25 @@ static int gcd(int a, int b)
 	// Calc the denominator.
 	d = A.denominator * B.denominator;
 	
-	return [COINSFraction fractionWith:s numerator:n denominator:d];
+	return [COINSFraction fractionWithSign:s numerator:n denominator:d];
 }
 
 + (COINSFraction *)subtract:(COINSFraction *)A from:(COINSFraction *)B
 {
-	COINSFraction *minusA = [COINSFraction fractionWith:A.sign * -1 numerator:A.numerator denominator:A.denominator];
+	COINSFraction *minusA = [COINSFraction fractionWithSign:A.sign * -1 numerator:A.numerator denominator:A.denominator];
 	return [COINSFraction add:minusA to:B];
 }
 
 + (COINSFraction *)multiply:(COINSFraction *)A by:(COINSFraction *)B
 {
-	return [COINSFraction fractionWith:A.sign * B.sign
+	return [COINSFraction fractionWithSign:A.sign * B.sign
 							 numerator:A.numerator * B.numerator
 						   denominator:A.denominator * B.denominator];
 }
 
 + (COINSFraction *)divide:(COINSFraction *)A by:(COINSFraction *)B
 {
-	return [COINSFraction fractionWith:A.sign * B.sign
+	return [COINSFraction fractionWithSign:A.sign * B.sign
 							 numerator:A.numerator * B.denominator
 						   denominator:A.denominator * B.numerator];
 }
@@ -195,12 +195,12 @@ static int gcd(int a, int b)
 {
 	return (denominator == 1)
 	? [NSString stringWithFormat:@"%d", sign * numerator]
-	: [NSString stringWithFormat:@"%db%d", sign *numerator, denominator];
+	: [NSString stringWithFormat:@"%db%d", sign * numerator, denominator];
 }
 
 + (id)fractionWithInteger:(NSInteger)i
 {
-	return [COINSFraction fractionWith:i / abs(i) numerator:i denominator:1];
+	return [COINSFraction fractionWithSign:i / abs(i) numerator:i denominator:1];
 }
 
 

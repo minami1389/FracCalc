@@ -16,8 +16,8 @@
 
 /* Create fraction */
 /// Designated initializer
-- (id)initWith:(NSUInteger)s numerator:(NSInteger)n denominator:(NSInteger)d;
-+ (id)fractionWith:(NSInteger)sign numerator:(NSUInteger)numerator denominator:(NSUInteger)denominator;
+- (id)initWithSign:(NSUInteger)s numerator:(NSInteger)n denominator:(NSInteger)d;
++ (id)fractionWithSign:(NSInteger)sign numerator:(NSUInteger)numerator denominator:(NSUInteger)denominator;
 + (id)fractionWithString:(NSString *)string; // string may be like -2/3, 8/9 etc.
 + (id)MixedfractionWithString:(NSString *)string;
 

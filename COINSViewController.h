@@ -10,30 +10,6 @@
 #import "COINSKeyboard.h"
 
 @interface COINSViewController : UIViewController <COINSKeyboardDelegate>
-{
-    NSInteger turn;
-    UILabel *aa;
-    UILabel *ab;
-    UILabel *ac;
-    UILabel *ad;
-    UILabel *ae;
-    UILabel *ba;
-    UILabel *bc;
-    UILabel *be;
-    UILabel *c1;
-    UILabel *c2;
-    UILabel *c3;
-    UILabel *center1;
-    UILabel *center2;
-    UILabel *center3;
-    NSMutableString *lde;
-    NSMutableString *lnu;
-    NSMutableString *rde;
-    NSMutableString *rnu;
-    NSMutableString *ade;
-    NSMutableString *anu;
-    NSMutableString *ain;
-}
 
 @property (weak, nonatomic) IBOutlet COINSKeyboard *keyboard;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -52,6 +28,8 @@
 @property (weak, nonatomic) IBOutlet UIView *secondVinculumView;
 @property (weak, nonatomic) IBOutlet UILabel *secondDenominatorLabel;
 @property (weak, nonatomic) IBOutlet UILabel *secondIntegerLabel;
+@property (weak, nonatomic) IBOutlet UILabel *leftParenthesisLabel;
+@property (weak, nonatomic) IBOutlet UILabel *rightParenthesisLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *firstEqualLabel;
 
