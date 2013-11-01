@@ -16,6 +16,13 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum COINSKeyboardStyle {
+	COINSKeyboardStyleiOS7 = 0,
+	COINSKeyboardStyleBlackboard,
+	COINSKeyboardStylePinkCircle,
+	COINSKeyboardStyleDefault = COINSKeyboardStyleiOS7,
+	} COINSKeyboardStyle;
+
 @protocol COINSKeyboardDelegate <NSObject>
 
 - (void)input:(unichar)c;
@@ -31,7 +38,7 @@
 @property NSArray *titles;
 @property NSString *outCharacters;
 
-- (void)updateButtonsWithRow:(NSUInteger)r column:(NSUInteger)c titles:(NSArray *)t outCharacters:(NSString *)s;
+- (void)updateButtonsWithRow:(NSUInteger)r column:(NSUInteger)c titles:(NSArray *)t outCharacters:(NSString *)s style:(COINSKeyboardStyle)style;
 - (void)mergeButtons:(NSArray *)mergeInfo;
 
 @end

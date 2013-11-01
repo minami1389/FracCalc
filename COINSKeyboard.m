@@ -20,7 +20,7 @@
 @synthesize titles;
 @synthesize outCharacters;
 
-- (void)updateButtonsWithRow:(NSUInteger)r column:(NSUInteger)c titles:(NSArray *)t outCharacters:(NSString *)s
+- (void)updateButtonsWithRow:(NSUInteger)r column:(NSUInteger)c titles:(NSArray *)t outCharacters:(NSString *)s style:(COINSKeyboardStyle)style
 {
 	// check if number of buttons and titles match
 	if (t.count != s.length) {
@@ -38,62 +38,25 @@
 		buttons = [NSMutableArray array];
 	}
 	
-	UIColor *backgroundColor = [UIColor blackColor];
-	UIColor *keyColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.0];
-	self.backgroundColor = backgroundColor;
 	row = r;
 	column = c;
 	titles = t;
 	outCharacters = s;
 	
-	CGFloat buttonBorderWidth = 0.5;
-	UIEdgeInsets keyboardInset = UIEdgeInsetsMake(1.0 - buttonBorderWidth, // top
-												  1.0 - buttonBorderWidth, // left
-												  1.0 - buttonBorderWidth, // bottom
-												  1.0 - buttonBorderWidth); // right
-	buttonSize = CGSizeMake((self.frame.size.width - keyboardInset.left - keyboardInset.right) / column,
-							(self.frame.size.height - keyboardInset.top - keyboardInset.bottom) / row);
+	buttonSize = CGSizeMake(self.frame.size.width / column, self.frame.size.height / row);
 	for (int i = 0; i < titles.count; i++) {
-		UIButton *aButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-		aButton.frame = CGRectMake((i % column) * buttonSize.width + keyboardInset.left,
-								   (i / column) * buttonSize.height + keyboardInset.top,
+		UIButton *aButton = [UIButton buttonWithType:UIButtonTypeCustom];
+		aButton.frame = CGRectMake((i % column) * buttonSize.width,
+								   (i / column) * buttonSize.height,
 								   buttonSize.width,
 								   buttonSize.height);
 		[aButton setTitle:titles[i] forState:UIControlStateNormal];
 		[aButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-		aButton.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:buttonSize.width / 2];
 		aButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-		// set key color
-		NSCharacterSet *operators = [NSCharacterSet characterSetWithCharactersInString:@"+-×÷="];
-		NSRange operatorsRange = [aButton.titleLabel.text rangeOfCharacterFromSet:operators];
-		if (operatorsRange.location == NSNotFound) {
-			NSCharacterSet *numerals = [NSCharacterSet characterSetWithCharactersInString:@"1234567890"];
-			NSRange numeralRange = [aButton.titleLabel.text rangeOfCharacterFromSet:numerals];
-			if (numeralRange.location == NSNotFound) { // others
-				[aButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-				aButton.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0];
-			} else { // numeral
-				[aButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-				aButton.backgroundColor = keyColor;
-			}
-		} else { // four arithmetic operator or equal
-			[aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-			aButton.backgroundColor = [UIColor colorWithRed:1.0 green:0.56 blue:0.0 alpha:1.0];
-		}
-		aButton.layer.borderWidth = buttonBorderWidth;
-		aButton.layer.borderColor = [backgroundColor CGColor];
-		
 		[buttons addObject:aButton];
-	
 		[self addSubview:aButton];
 	}
-}
-
-- (void)buttonPressed:(id)sender
-{
-	NSUInteger i = [buttons indexOfObject:sender];
-	[delegate input:[outCharacters characterAtIndex:i]];
-    
+	[self updateButtonStyleWithStyle:style];
 }
 
 - (void)mergeButtons:(NSArray *)mergeInfo
@@ -135,6 +98,142 @@
 												bottomButton.frame.origin.y + buttonSize.height - topButton.frame.origin.y);
 	}
 }
+
+- (void)buttonPressed:(id)sender
+{
+	NSUInteger i = [buttons indexOfObject:sender];
+	[delegate input:[outCharacters characterAtIndex:i]];
+    
+}
+
+- (void)updateButtonStyleWithStyle:(COINSKeyboardStyle)style
+{
+	for (NSUInteger i = 0; i < buttons.count; i++) {
+		UIButton *aButton = buttons[i];
+		switch (style) {
+			case COINSKeyboardStyleiOS7:
+			{
+				UIColor *backgroundColor = [UIColor blackColor];
+				UIColor *keyColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.0];
+				self.backgroundColor = backgroundColor;
+				UIEdgeInsets keyboardInset = UIEdgeInsetsMake(0.5, 0.5, 0.5, 0.5);
+				buttonSize = CGSizeMake((self.frame.size.width - keyboardInset.left - keyboardInset.right) / column,
+										(self.frame.size.height - keyboardInset.top - keyboardInset.bottom) / row);
+				aButton.frame = CGRectMake((i % column) * buttonSize.width + keyboardInset.left,
+										   (i / column) * buttonSize.height + keyboardInset.top,
+										   buttonSize.width,
+										   buttonSize.height);
+				aButton.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:buttonSize.width / 2];
+				// set key color
+				NSCharacterSet *operators = [NSCharacterSet characterSetWithCharactersInString:@"+-×÷="];
+				NSRange operatorsRange = [aButton.titleLabel.text rangeOfCharacterFromSet:operators];
+				if (operatorsRange.location == NSNotFound) {
+					NSCharacterSet *numerals = [NSCharacterSet characterSetWithCharactersInString:@"1234567890"];
+					NSRange numeralRange = [aButton.titleLabel.text rangeOfCharacterFromSet:numerals];
+					if (numeralRange.location == NSNotFound) { // others
+						[aButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+						aButton.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0];
+					} else { // numeral
+						[aButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+						aButton.backgroundColor = keyColor;
+					}
+				} else { // four arithmetic operator or equal
+					[aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+					aButton.backgroundColor = [UIColor colorWithRed:1.0 green:0.56 blue:0.0 alpha:1.0];
+				}
+				aButton.layer.borderWidth = 0.5;
+				aButton.layer.borderColor = [backgroundColor CGColor];
+			}
+				break;
+			case COINSKeyboardStyleBlackboard:
+			{
+				UIColor *backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:0.5];
+				UIColor *keyColor = [UIColor colorWithRed:0.0 green:0.3 blue:0.0 alpha:1.0];
+				self.backgroundColor = backgroundColor;
+				UIEdgeInsets keyboardInset = UIEdgeInsetsMake(0.5, 0.5, 0.5, 0.5);
+				buttonSize = CGSizeMake((self.frame.size.width - keyboardInset.left - keyboardInset.right) / column,
+										(self.frame.size.height - keyboardInset.top - keyboardInset.bottom) / row);
+				aButton.frame = CGRectMake((i % column) * buttonSize.width + keyboardInset.left,
+										   (i / column) * buttonSize.height + keyboardInset.top,
+										   buttonSize.width,
+										   buttonSize.height);
+				aButton.titleLabel.font = [UIFont fontWithName:@"Chalkduster" size:buttonSize.width / 2];
+				// set key color
+				NSCharacterSet *operators = [NSCharacterSet characterSetWithCharactersInString:@"+-×÷="];
+				NSRange operatorsRange = [aButton.titleLabel.text rangeOfCharacterFromSet:operators];
+				if (operatorsRange.location == NSNotFound) {
+					NSCharacterSet *numerals = [NSCharacterSet characterSetWithCharactersInString:@"1234567890"];
+					NSRange numeralRange = [aButton.titleLabel.text rangeOfCharacterFromSet:numerals];
+					if (numeralRange.location == NSNotFound) { // others
+						[aButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.0 alpha:1.0] forState:UIControlStateNormal]; // Yellow
+						aButton.backgroundColor = keyColor;
+					} else { // numeral
+						[aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+						aButton.backgroundColor = keyColor;
+					}
+				} else { // four arithmetic operator or equal
+					[aButton setTitleColor:[UIColor colorWithRed:1.0 green:0.46 blue:0.8 alpha:1.0] forState:UIControlStateNormal]; // Pink
+					aButton.backgroundColor = keyColor;
+				}
+				aButton.layer.borderWidth = 0.5;
+				aButton.layer.borderColor = [backgroundColor CGColor];
+			}
+				break;
+			case COINSKeyboardStylePinkCircle:
+			{
+				UIColor *backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0];
+				UIColor *keyColor = [UIColor colorWithRed:1.0 green:0.46 blue:0.8 alpha:1.0]; // Pink
+				self.backgroundColor = backgroundColor;
+				CGFloat margin = 4.0;
+				buttonSize = CGSizeMake(self.frame.size.width / column - margin * 2,
+										self.frame.size.height / row - margin * 2);
+				CGFloat trimLength = 0.0;
+				// Constrain buttonSize.width and height as the same length
+				if (buttonSize.width > buttonSize.height) {
+					trimLength = buttonSize.width - buttonSize.height;
+					buttonSize.width = buttonSize.height;
+					aButton.frame = CGRectMake((i % column) * (buttonSize.width + trimLength + margin * 2) + trimLength / 2.0 + margin,
+											   (i / column) * (buttonSize.height + margin * 2) + margin,
+											   buttonSize.width,
+											   buttonSize.height);
+
+				} else {
+					trimLength = buttonSize.height - buttonSize.width;
+					buttonSize.height = buttonSize.width;
+					aButton.frame = CGRectMake((i % column) * (buttonSize.width + margin * 2) + margin,
+											   (i / column) * (buttonSize.height + trimLength + margin * 2) + trimLength / 2.0 + margin,
+											   buttonSize.width,
+											   buttonSize.height);
+				}
+				aButton.titleLabel.font = [UIFont fontWithName:@"ArialRoundedMTBold" size:buttonSize.width / 2.5];
+				// set key color
+				NSCharacterSet *operators = [NSCharacterSet characterSetWithCharactersInString:@"+-×÷="];
+				NSRange operatorsRange = [aButton.titleLabel.text rangeOfCharacterFromSet:operators];
+				if (operatorsRange.location == NSNotFound) {
+					NSCharacterSet *numerals = [NSCharacterSet characterSetWithCharactersInString:@"1234567890"];
+					NSRange numeralRange = [aButton.titleLabel.text rangeOfCharacterFromSet:numerals];
+					if (numeralRange.location == NSNotFound) { // others
+						[aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+						aButton.backgroundColor = [UIColor colorWithRed:1.0 green:0.3 blue:0.3 alpha:1.0];
+					} else { // numeral
+						[aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+						aButton.backgroundColor = keyColor;
+					}
+				} else { // four arithmetic operator or equal
+					[aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+					aButton.backgroundColor = [UIColor colorWithRed:1.0 green:0.3 blue:0.3 alpha:1.0];
+				}
+				aButton.layer.borderColor = [[UIColor colorWithRed:0.7 green:0.7 blue:0.7 alpha:1.0] CGColor];
+				aButton.layer.borderWidth = 2.0;
+				aButton.layer.cornerRadius = buttonSize.width / 2.0;
+			}
+				break;
+			default:
+				break;
+		}
+	}
+}
+
 
 /*
 // Only override drawRect: if you perform custom drawing.
