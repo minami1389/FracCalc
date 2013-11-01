@@ -251,7 +251,7 @@
 								  @"1",	@"2",	@"3",
 								  @"0",	@"分の",	@"="];
 		NSString *outCharacters = @"aasc*/c+-7894561230b=";
-		[keyboard updateButtonsWithRow:7 column:3 titles:buttonTitles outCharacters:outCharacters style:COINSKeyboardStyleiOS7];
+		[keyboard updateButtonsWithRow:7 column:3 titles:buttonTitles outCharacters:outCharacters style:COINSKeyboardStyleBubble];
 		NSArray *mergeInfo = @[@[@0, @1], @[@3, @6]];
 		[keyboard mergeButtons:mergeInfo];
 	} else {
