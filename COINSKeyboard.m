@@ -230,7 +230,7 @@
 				aButton.layer.cornerRadius = buttonSize.width / 2.0;
 			}
 				break;
-			case COINSKeyboardStyleBubble:
+			case COINSKeyboardStyleBlueCircle:
 			{
 				CGFloat hue = 0.55; // Blue
 				UIColor *backgroundColor = [UIColor colorWithHue:hue saturation:0.2 brightness:1.0 alpha:1.0];

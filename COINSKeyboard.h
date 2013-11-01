@@ -20,7 +20,7 @@ typedef enum COINSKeyboardStyle {
 	COINSKeyboardStyleiOS7 = 0,
 	COINSKeyboardStyleBlackboard,
 	COINSKeyboardStylePinkCircle,
-	COINSKeyboardStyleBubble,
+	COINSKeyboardStyleBlueCircle,
 	COINSKeyboardStyleDefault = COINSKeyboardStyleiOS7,
 	} COINSKeyboardStyle;
 
