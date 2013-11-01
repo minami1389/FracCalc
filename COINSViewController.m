@@ -251,7 +251,7 @@
 								  @"1",	@"2",	@"3",
 								  @"0",	@"分の",	@"="];
 		NSString *outCharacters = @"aasc*/c+-7894561230b=";
-		[keyboard updateButtonsWithRow:7 column:3 titles:buttonTitles outCharacters:outCharacters style:COINSKeyboardStylePinkCircle];
+		[keyboard updateButtonsWithRow:7 column:3 titles:buttonTitles outCharacters:outCharacters style:COINSKeyboardStyleiOS7];
 		NSArray *mergeInfo = @[@[@0, @1], @[@3, @6]];
 		[keyboard mergeButtons:mergeInfo];
 	} else {
@@ -261,7 +261,7 @@
 								  @"1",	@"2",	@"3",	@"+",
 								  @"0",	@"分の",	@"分の",	@"="];
 		NSString *outCharacters = @"acs/789*456-123+0bb=";
-		[keyboard updateButtonsWithRow:5 column:4 titles:buttonTitles outCharacters:outCharacters style:COINSKeyboardStyleDefault];
+		[keyboard updateButtonsWithRow:5 column:4 titles:buttonTitles outCharacters:outCharacters style:COINSKeyboardStylePinkCircle];
 		NSArray *mergeInfo = @[@[@17, @18]];
 		[keyboard mergeButtons:mergeInfo];
 	}
