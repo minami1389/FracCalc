@@ -113,6 +113,7 @@
 {
 	switch (c) {
 		case '0':
+            return [[COINSFractionStateFirstNumeratorZero alloc] init];
 		case '1':
 		case '2':
 		case '3':
@@ -137,6 +138,24 @@
 @end
 
 @implementation COINSFractionStateFirstIntegerZero
+
+- (COINSFractionState *)nextStateWithInput:(unichar)c
+{
+	switch (c) {
+		case '+':
+		case '-':
+		case '*':
+			return [[COINSFractionStateOperatorButDivision alloc] init];
+		case '/':
+			return [[COINSFractionStateOperatorDivision alloc] init];
+		default:
+			return [[COINSFractionStateBadInput alloc] init];
+	}
+}
+
+@end
+
+@implementation COINSFractionStateFirstNumeratorZero
 
 - (COINSFractionState *)nextStateWithInput:(unichar)c
 {
@@ -287,6 +306,7 @@
 {
 	switch (c) {
 		case '0':
+            return [[COINSFractionStateSecondNumeratorZero alloc] init];
 		case '1':
 		case '2':
 		case '3':
@@ -319,6 +339,21 @@
 }
 
 @end
+
+@implementation COINSFractionStateSecondNumeratorZero
+
+- (COINSFractionState *)nextStateWithInput:(unichar)c
+{
+    switch (c) {
+        case '=':
+            return [[COINSFractionStateEnd alloc] init];
+        default:
+            return [[COINSFractionStateBadInput alloc] init];
+    }
+}
+@end
+
+
 
 @implementation COINSFractionStateSecondSignDivision
 

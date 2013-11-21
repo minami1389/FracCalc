@@ -121,7 +121,6 @@
 
 	// Contextを取得
 	context = [[COINSFractionContext alloc] init];
-	
 	for (NSUInteger i = 0; i < inputHistory.length; i++) {
 		unichar ch = [inputHistory characterAtIndex:i];
 		[context inputChar:ch];
