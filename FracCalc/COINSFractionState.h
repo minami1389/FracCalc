@@ -54,6 +54,12 @@ enum COINSFractionBadInput {
 
 @interface COINSFractionStateSecondSignDivision : COINSFractionState;
 @end
+@interface COINSFractionStateSecondNumberDivision : COINSFractionState;
+@end
+@interface COINSFractionStateSecondVinculumDivision : COINSFractionState;
+@end
+@interface  COINSFractionStateSecondNumeratorDivision: COINSFractionState;
+@end
 
 @interface COINSFractionStateEnd : COINSFractionState;
 @end

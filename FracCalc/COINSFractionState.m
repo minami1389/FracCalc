@@ -90,6 +90,7 @@
 {
 	switch (c) {
 		case '0':
+            return [[COINSFractionStateFirstNumeratorZero alloc] init];
 		case '1':
 		case '2':
 		case '3':
@@ -113,7 +114,6 @@
 {
 	switch (c) {
 		case '0':
-            return [[COINSFractionStateFirstNumeratorZero alloc] init];
 		case '1':
 		case '2':
 		case '3':
@@ -213,7 +213,7 @@
 		case '7':
 		case '8':
 		case '9':
-			return [[COINSFractionStateSecondNumber alloc] init];
+			return [[COINSFractionStateSecondNumberDivision alloc] init];
 		case 's':
 			return [[COINSFractionStateSecondSignDivision alloc] init];
 		default:
@@ -282,7 +282,8 @@
 - (COINSFractionState *)nextStateWithInput:(unichar)c
 {
 	switch (c) {
-		case '0':
+        case '0':
+            return [[COINSFractionStateSecondNumeratorZero alloc] init];
 		case '1':
 		case '2':
 		case '3':
@@ -306,7 +307,6 @@
 {
 	switch (c) {
 		case '0':
-            return [[COINSFractionStateSecondNumeratorZero alloc] init];
 		case '1':
 		case '2':
 		case '3':
@@ -369,9 +369,9 @@
 		case '7':
 		case '8':
 		case '9':
-			return [[COINSFractionStateSecondNumber alloc] init];
+			return [[COINSFractionStateSecondNumberDivision alloc] init];
 		case 's':
-			return [[COINSFractionStateSecondSign alloc] init];
+			return [[COINSFractionStateSecondSignDivision alloc] init];
 		default:
 			return [[COINSFractionStateBadInput alloc] init];
 	}
@@ -379,11 +379,87 @@
 
 @end
 
+@implementation COINSFractionStateSecondNumberDivision
+
+- (COINSFractionState *)nextStateWithInput:(unichar)c
+{
+    switch (c) {
+		case '0':
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case '9':
+			return [[COINSFractionStateSecondNumberDivision alloc] init];
+		case 'b':
+			return [[COINSFractionStateSecondVinculumDivision alloc] init];
+		case '=':
+			return [[COINSFractionStateEnd alloc] init];
+		default:
+			return [[COINSFractionStateBadInput alloc] init];
+	}
+
+}
+
+@end
+
+@implementation COINSFractionStateSecondVinculumDivision
+
+- (COINSFractionState *)nextStateWithInput:(unichar)c
+{
+    switch (c) {
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case '9':
+			return [[COINSFractionStateSecondNumeratorDivision alloc] init];
+		default:
+			return [[COINSFractionStateBadInput alloc] init];
+	}
+
+}
+
+@end
+
+@implementation COINSFractionStateSecondNumeratorDivision
+
+- (COINSFractionState *)nextStateWithInput:(unichar)c
+{
+    switch (c) {
+		case '0':
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case '9':
+			return [[COINSFractionStateSecondNumeratorDivision alloc] init];
+		case '=':
+			return [[COINSFractionStateEnd alloc] init];
+		default:
+			return [[COINSFractionStateBadInput alloc] init];
+   
+    }
+}
+@end
+
 @implementation COINSFractionStateEnd
 
 - (COINSFractionState *)nextStateWithInput:(unichar)c
 {
-	return self;
+	return [[COINSFractionStateFirstSign alloc] init];
 }
 
 @end

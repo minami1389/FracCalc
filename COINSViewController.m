@@ -155,7 +155,10 @@
 			firstIntegerLabel.text = @"0";
 			firstFractionNumerator = 0;
 			firstFractionDenominator = 1;
-		} else if ([context.currentState class] == [COINSFractionStateOperatorButDivision class]
+		} else if ([context.currentState class] == [COINSFractionStateFirstNumeratorZero class]) {
+            firstNumeratorLabel.text = @"0";
+            firstFractionNumerator = 0;
+        } else if ([context.currentState class] == [COINSFractionStateOperatorButDivision class]
 				   || [context.currentState class] == [COINSFractionStateOperatorDivision class]) {
 			firstOperatorLabel.text = [NSString stringWithFormat:@"%c", ch];
 			if (ch == '*') {
@@ -196,7 +199,38 @@
 			secondIntegerLabel.text = @"0";
 			secondFractionNumerator = 0;
 			secondFractionDenominator = 1;
-		} else if ([context.currentState class] == [COINSFractionStateEnd class]) {
+		} else if ([context.currentState class] == [COINSFractionStateSecondNumeratorZero class]) {
+            secondNumeratorLabel.text = @"0";
+            secondFractionNumerator = 0;
+        } else if ([context.currentState class] == [COINSFractionStateSecondSignDivision class]) {
+            if ([secondSignLabel.text isEqualToString:@""]) {
+                secondSignLabel.text = @"-";
+                secondFractionSign = -1;
+				leftParenthesisLabel.hidden = NO;
+				rightParenthesisLabel.hidden = NO;
+			} else {
+				secondSignLabel.text = @"";
+				secondFractionSign = 1;
+				leftParenthesisLabel.hidden = YES;
+				rightParenthesisLabel.hidden = YES;
+            }
+        } else if ([context.currentState class] == [COINSFractionStateSecondNumberDivision class]) {
+            secondIntegerLabel.text = [NSString stringWithFormat:@"%@%c", secondIntegerLabel.text, ch];
+            secondFractionNumerator = [secondIntegerLabel.text integerValue];
+            secondFractionDenominator = 1;
+            if (secondFractionSign == 0) {
+                secondFractionSign = 1;
+            }
+        } else if ([context.currentState class] == [COINSFractionStateSecondVinculumDivision class]) {
+            secondDenominatorLabel.text = secondIntegerLabel.text;
+			secondIntegerLabel.text = @"";
+			secondVinculumView.hidden = NO;
+			secondFractionDenominator = secondFractionNumerator;
+        } else if ([context.currentState class] == [COINSFractionStateSecondNumeratorDivision class]) {
+            secondNumeratorLabel.text = [NSString stringWithFormat:@"%@%c", secondNumeratorLabel.text, ch];
+			secondFractionNumerator = [secondNumeratorLabel.text integerValue];
+        }
+        else if ([context.currentState class] == [COINSFractionStateEnd class]) {
 			// Evaluate
 			COINSFraction *firstFraction = [COINSFraction fractionWithSign:firstFractionSign
 																 numerator:firstFractionNumerator
@@ -234,7 +268,8 @@
 				thirdDenominatorLabel.text = [NSString stringWithFormat:@"%d", thirdFraction.denominator];
 				thirdVinculumView.hidden = NO;
 			}
-		}
+            [inputHistory deleteCharactersInRange:NSMakeRange(0, inputHistory.length)];
+        }
 	}
 }
 
