@@ -8,6 +8,7 @@
 
 #import "COINSKeyboard.h"
 
+
 @implementation COINSKeyboard {
 	NSMutableArray *buttons;
 	NSUInteger row;
@@ -103,6 +104,7 @@
 {
 	NSUInteger i = [buttons indexOfObject:sender];
 	[delegate input:[outCharacters characterAtIndex:i]];
+
     
 }
 

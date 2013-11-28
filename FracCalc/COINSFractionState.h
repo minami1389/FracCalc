@@ -38,10 +38,6 @@ enum COINSFractionBadInput {
 @end
 @interface COINSFractionStateOperatorDivision : COINSFractionState;
 @end
-@interface COINSFractionStateOperatorButDivisiondash : COINSFractionState;
-@end
-@interface COINSFractionStateOperatorDivisiondash : COINSFractionState;
-@end
 
 
 @interface COINSFractionStateSecondSign : COINSFractionState;

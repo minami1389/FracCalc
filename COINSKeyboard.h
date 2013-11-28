@@ -16,6 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 typedef enum COINSKeyboardStyle {
 	COINSKeyboardStyleiOS7 = 0,
 	COINSKeyboardStyleBlackboard,
