@@ -192,6 +192,12 @@
 			return [[COINSFractionStateSecondNumber alloc] init];
 		case 's':
 			return [[COINSFractionStateSecondSign alloc] init];
+        case '+':
+        case '-':
+        case '*':
+            return [[COINSFractionStateOperatorButDivisiondash alloc] init];
+        case '/':
+            return [[COINSFractionStateOperatorDivisiondash alloc] init];
 		default:
 			return [[COINSFractionStateBadInput alloc] init];
 	}
@@ -216,12 +222,82 @@
 			return [[COINSFractionStateSecondNumberDivision alloc] init];
 		case 's':
 			return [[COINSFractionStateSecondSignDivision alloc] init];
+        case '+':
+        case '-':
+        case '*':
+            return [[COINSFractionStateOperatorButDivisiondash alloc] init];
+        case '/':
+            return [[COINSFractionStateOperatorDivisiondash alloc] init];
 		default:
 			return [[COINSFractionStateBadInput alloc] init];
 	}
 }
 
 @end
+
+@implementation COINSFractionStateOperatorButDivisiondash
+
+- (COINSFractionState *)nextStateWithInput:(unichar)c
+{
+	switch (c) {
+		case '0':
+			return [[COINSFractionStateSecondIntegerZero alloc] init];
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case '9':
+			return [[COINSFractionStateSecondNumber alloc] init];
+		case 's':
+			return [[COINSFractionStateSecondSign alloc] init];
+        case '+':
+        case '-':
+        case '*':
+            return [[COINSFractionStateOperatorButDivisiondash alloc] init];
+        case '/':
+            return [[COINSFractionStateOperatorDivisiondash alloc] init];
+		default:
+			return [[COINSFractionStateBadInput alloc] init];
+	}
+}
+
+@end
+
+@implementation COINSFractionStateOperatorDivisiondash
+
+- (COINSFractionState *)nextStateWithInput:(unichar)c
+{
+	switch (c) {
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case '9':
+			return [[COINSFractionStateSecondNumberDivision alloc] init];
+		case 's':
+			return [[COINSFractionStateSecondSignDivision alloc] init];
+        case '+':
+        case '-':
+        case '*':
+            return [[COINSFractionStateOperatorButDivisiondash alloc] init];
+        case '/':
+            return [[COINSFractionStateOperatorDivisiondash alloc] init];
+		default:
+			return [[COINSFractionStateBadInput alloc] init];
+	}
+}
+
+@end
+
+
 
 
 @implementation COINSFractionStateSecondSign

@@ -166,8 +166,20 @@
 			} else if (ch == '/') {
 				firstOperatorLabel.text = @"÷";
 			}
-			operator = ch;
-		} else if ([context.currentState class] == [COINSFractionStateSecondSign class]
+            operator = ch;
+			
+		}  else if ([context.currentState class] == [COINSFractionStateOperatorButDivisiondash class]
+                    || [context.currentState class] == [COINSFractionStateOperatorDivisiondash class]) {
+            [inputHistory deleteCharactersInRange:NSMakeRange(inputHistory.length-2, 1)];
+			firstOperatorLabel.text = [NSString stringWithFormat:@"%c", ch];
+			if (ch == '*') {
+				firstOperatorLabel.text = @"×";
+			} else if (ch == '/') {
+				firstOperatorLabel.text = @"÷";
+			}
+            operator = ch;
+			
+		}  else if ([context.currentState class] == [COINSFractionStateSecondSign class]
 				   || [context.currentState class] == [COINSFractionStateSecondSignDivision class]) {
 			if ([secondSignLabel.text isEqualToString:@""]) {
 				secondSignLabel.text = @"-";
@@ -271,6 +283,8 @@
             [inputHistory deleteCharactersInRange:NSMakeRange(0, inputHistory.length)];
         }
 	}
+    NSLog(@"inputHistory2: %@", inputHistory);
+
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
