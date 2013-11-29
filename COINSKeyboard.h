@@ -15,6 +15,7 @@
 */
 
 #import <UIKit/UIKit.h>
+#import "KeyResponce.h"
 
 
 typedef enum COINSKeyboardStyle {
@@ -39,6 +40,8 @@ typedef enum COINSKeyboardStyle {
 
 @property NSArray *titles;
 @property NSString *outCharacters;
+@property KeyResponce *aButton;
+
 
 - (void)updateButtonsWithRow:(NSUInteger)r column:(NSUInteger)c titles:(NSArray *)t outCharacters:(NSString *)s style:(COINSKeyboardStyle)style;
 - (void)mergeButtons:(NSArray *)mergeInfo;

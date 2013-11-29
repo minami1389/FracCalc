@@ -20,6 +20,7 @@
 @synthesize buttonInset;
 @synthesize titles;
 @synthesize outCharacters;
+@synthesize aButton;
 
 - (void)updateButtonsWithRow:(NSUInteger)r column:(NSUInteger)c titles:(NSArray *)t outCharacters:(NSString *)s style:(COINSKeyboardStyle)style
 {
@@ -31,7 +32,7 @@
 
 	// remove all buttons from view and array
 	if (buttons) {
-		for (UIButton *aButton in buttons) {
+		for (aButton in buttons) {
 			[aButton removeFromSuperview];
 		}
 		[buttons removeAllObjects];
@@ -46,7 +47,7 @@
 	
 	buttonSize = CGSizeMake(self.frame.size.width / column, self.frame.size.height / row);
 	for (int i = 0; i < titles.count; i++) {
-		UIButton *aButton = [UIButton buttonWithType:UIButtonTypeCustom];
+		aButton = [UIButton buttonWithType:UIButtonTypeCustom];
 		aButton.frame = CGRectMake((i % column) * buttonSize.width,
 								   (i / column) * buttonSize.height,
 								   buttonSize.width,
@@ -68,7 +69,7 @@
 		for (NSNumber *n in anArray) {
 			// Find the most top-left corner and the bottom-right corner.
 			NSUInteger i = n.integerValue;
-			UIButton *aButton = buttons[i];
+			aButton = buttons[i];
 			NSUInteger r = i / column;
 			NSUInteger c = i % column;
 			if (r < top) {
@@ -104,15 +105,16 @@
 {
 	NSUInteger i = [buttons indexOfObject:sender];
 	[delegate input:[outCharacters characterAtIndex:i]];
-
+    
     
 }
 
 - (void)updateButtonStyleWithStyle:(COINSKeyboardStyle)style
-{
+{   
 	for (NSUInteger i = 0; i < buttons.count; i++) {
-		UIButton *aButton = buttons[i];
-		switch (style) {
+		aButton = buttons[i];
+
+        switch (style) {
 			case COINSKeyboardStyleiOS7:
 			{
 				UIColor *backgroundColor = [UIColor blackColor];
@@ -127,7 +129,7 @@
 										   buttonSize.height);
 				aButton.titleLabel.font = [UIFont fontWithName:@"HiraKakuProN-W3" size:buttonSize.width / 2];
 				// set key color
-				NSCharacterSet *operators = [NSCharacterSet characterSetWithCharactersInString:@"+-×÷="];
+                NSCharacterSet *operators = [NSCharacterSet characterSetWithCharactersInString:@"+-×÷="];
 				NSRange operatorsRange = [aButton.titleLabel.text rangeOfCharacterFromSet:operators];
 				if (operatorsRange.location == NSNotFound) {
 					NSCharacterSet *numerals = [NSCharacterSet characterSetWithCharactersInString:@"1234567890"];
@@ -182,8 +184,8 @@
 			}
 				break;
 			case COINSKeyboardStylePinkCircle:
-			{
-				CGFloat hue = 0.9; // Pink
+            {
+                CGFloat hue = 0.9; // Pink
 				UIColor *backgroundColor = [UIColor colorWithHue:hue saturation:0.2 brightness:1.0 alpha:1.0];
 				UIColor *keyColor = [UIColor colorWithHue:hue saturation:0.4 brightness:1.0 alpha:1.0];
 				self.backgroundColor = backgroundColor;
@@ -211,22 +213,26 @@
 				}
 				aButton.titleLabel.font = [UIFont fontWithName:@"ArialRoundedMTBold" size:buttonSize.width / 2.5];
 				// set key color
-				NSCharacterSet *operators = [NSCharacterSet characterSetWithCharactersInString:@"+-×÷="];
+                NSCharacterSet *operators = [NSCharacterSet characterSetWithCharactersInString:@"+-×÷="];
 				NSRange operatorsRange = [aButton.titleLabel.text rangeOfCharacterFromSet:operators];
-				if (operatorsRange.location == NSNotFound) {
+                
+                if (operatorsRange.location == NSNotFound) {
 					NSCharacterSet *numerals = [NSCharacterSet characterSetWithCharactersInString:@"1234567890"];
 					NSRange numeralRange = [aButton.titleLabel.text rangeOfCharacterFromSet:numerals];
 					if (numeralRange.location == NSNotFound) { // others
-						[aButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                        [aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+						[aButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
 						aButton.backgroundColor = [UIColor colorWithHue:hue saturation:0.5 brightness:1.0 alpha:1.0];
-					} else { // numeral
-						[aButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-						aButton.backgroundColor = keyColor;
-					}
+                    } else { // numeral
+						[aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+						[aButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+                        aButton.backgroundColor = keyColor;
+                    }
 				} else { // four arithmetic operator or equal
 					[aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                    [aButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
 					aButton.backgroundColor = [UIColor colorWithHue:hue saturation:0.6 brightness:1.0 alpha:1.0];
-				}
+                }
 				aButton.layer.borderColor = [[UIColor colorWithHue:hue saturation:0.5 brightness:0.8 alpha:1.0] CGColor];
 				aButton.layer.borderWidth = 1.0;
 				aButton.layer.cornerRadius = buttonSize.width / 2.0;
@@ -268,14 +274,17 @@
 					NSCharacterSet *numerals = [NSCharacterSet characterSetWithCharactersInString:@"1234567890"];
 					NSRange numeralRange = [aButton.titleLabel.text rangeOfCharacterFromSet:numerals];
 					if (numeralRange.location == NSNotFound) { // others
-						[aButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+						[aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+						[aButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
 						aButton.backgroundColor = [UIColor colorWithHue:hue saturation:0.5 brightness:1.0 alpha:1.0];
 					} else { // numeral
-						[aButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                        [aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+						[aButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
 						aButton.backgroundColor = keyColor;
 					}
 				} else { // four arithmetic operator or equal
 					[aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                    [aButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
 					aButton.backgroundColor = [UIColor colorWithHue:hue saturation:0.6 brightness:1.0 alpha:1.0];
 				}
 				aButton.layer.borderColor = [[UIColor colorWithHue:hue saturation:0.5 brightness:0.8 alpha:1.0] CGColor];
