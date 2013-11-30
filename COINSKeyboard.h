@@ -15,7 +15,7 @@
 */
 
 #import <UIKit/UIKit.h>
-#import "KeyResponce.h"
+#import "UIButton+BGColor.h"
 
 
 typedef enum COINSKeyboardStyle {
@@ -40,7 +40,7 @@ typedef enum COINSKeyboardStyle {
 
 @property NSArray *titles;
 @property NSString *outCharacters;
-@property KeyResponce *aButton;
+@property UIButton *aButton;
 
 
 - (void)updateButtonsWithRow:(NSUInteger)r column:(NSUInteger)c titles:(NSArray *)t outCharacters:(NSString *)s style:(COINSKeyboardStyle)style;

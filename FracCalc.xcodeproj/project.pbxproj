@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		432F95F81822132900BF6FA8 /* COINSFractionContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 432F95F71822132900BF6FA8 /* COINSFractionContext.m */; };
 		432F95FB1822133C00BF6FA8 /* COINSFractionState.m in Sources */ = {isa = PBXBuildFile; fileRef = 432F95FA1822133C00BF6FA8 /* COINSFractionState.m */; };
-		E94830DC184869F4003B0D87 /* KeyResponce.m in Sources */ = {isa = PBXBuildFile; fileRef = E94830DB184869F4003B0D87 /* KeyResponce.m */; };
-		E94830DE184876F2003B0D87 /* shibainu1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = E94830DD184876F2003B0D87 /* shibainu1.jpeg */; };
+		E94830E11849B119003B0D87 /* UIButton+BGColor.m in Sources */ = {isa = PBXBuildFile; fileRef = E94830E01849B119003B0D87 /* UIButton+BGColor.m */; };
 		E9AA34E317EFD69E00691B94 /* COINSFraction.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AA34DC17EFD69E00691B94 /* COINSFraction.m */; };
 		E9AA34E417EFD69E00691B94 /* COINSKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AA34DE17EFD69E00691B94 /* COINSKeyboard.m */; };
 		E9AA34E617EFD69E00691B94 /* COINSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AA34E217EFD69E00691B94 /* COINSViewController.m */; };
@@ -898,9 +897,8 @@
 		E94830441847218E003B0D87 /* RawReprocess.videoprocessor */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = RawReprocess.videoprocessor; sourceTree = "<group>"; };
 		E94830481847218E003B0D87 /* iPod */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = iPod; sourceTree = "<group>"; };
 		E948304A1847218E003B0D87 /* VoiceDial */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = VoiceDial; sourceTree = "<group>"; };
-		E94830DA184869F4003B0D87 /* KeyResponce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyResponce.h; path = ../KeyResponce.h; sourceTree = "<group>"; };
-		E94830DB184869F4003B0D87 /* KeyResponce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyResponce.m; path = ../KeyResponce.m; sourceTree = "<group>"; };
-		E94830DD184876F2003B0D87 /* shibainu1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = shibainu1.jpeg; path = ../../../../Pictures/shibainu1.jpeg; sourceTree = "<group>"; };
+		E94830DF1849B119003B0D87 /* UIButton+BGColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+BGColor.h"; path = "../UIButton+BGColor.h"; sourceTree = "<group>"; };
+		E94830E01849B119003B0D87 /* UIButton+BGColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+BGColor.m"; path = "../UIButton+BGColor.m"; sourceTree = "<group>"; };
 		E9AA34DB17EFD69E00691B94 /* COINSFraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = COINSFraction.h; path = ../COINSFraction.h; sourceTree = "<group>"; };
 		E9AA34DC17EFD69E00691B94 /* COINSFraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = COINSFraction.m; path = ../COINSFraction.m; sourceTree = "<group>"; };
 		E9AA34DD17EFD69E00691B94 /* COINSKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = COINSKeyboard.h; path = ../COINSKeyboard.h; sourceTree = "<group>"; };
@@ -2678,9 +2676,8 @@
 			children = (
 				E9AA34DD17EFD69E00691B94 /* COINSKeyboard.h */,
 				E9AA34DE17EFD69E00691B94 /* COINSKeyboard.m */,
-				E94830DD184876F2003B0D87 /* shibainu1.jpeg */,
-				E94830DA184869F4003B0D87 /* KeyResponce.h */,
-				E94830DB184869F4003B0D87 /* KeyResponce.m */,
+				E94830DF1849B119003B0D87 /* UIButton+BGColor.h */,
+				E94830E01849B119003B0D87 /* UIButton+BGColor.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -2809,7 +2806,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E94830DE184876F2003B0D87 /* shibainu1.jpeg in Resources */,
 				E9DFD0D817E42A83008E753E /* InfoPlist.strings in Resources */,
 				E9DFD0E017E42A83008E753E /* Default.png in Resources */,
 				E9DFD0E217E42A83008E753E /* Default@2x.png in Resources */,
@@ -2826,9 +2822,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E94830DC184869F4003B0D87 /* KeyResponce.m in Sources */,
 				E9DFD0DA17E42A83008E753E /* main.m in Sources */,
 				E9DFD0DE17E42A83008E753E /* COINSAppDelegate.m in Sources */,
+				E94830E11849B119003B0D87 /* UIButton+BGColor.m in Sources */,
 				E9AA34E317EFD69E00691B94 /* COINSFraction.m in Sources */,
 				E9AA34E417EFD69E00691B94 /* COINSKeyboard.m in Sources */,
 				432F95FB1822133C00BF6FA8 /* COINSFractionState.m in Sources */,

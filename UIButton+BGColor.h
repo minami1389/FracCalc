@@ -2,12 +2,15 @@
 //  UIButton+BGColor.h
 //  FracCalc
 //
-//  Created by minami on 2013/11/29.
+//  Created by minami on 2013/11/30.
 //  Copyright (c) 2013年 COINS Project AID. All rights reserved.
 //
 
-#import "UIButton+BGColor.h"
+#import <UIKit/UIKit.h>
 
-@interface UIButton_BGColor : UIButton_BGColor
+
+@interface UIButton (BGColor)
+
+- (void)setBackgroundColor:(UIColor *)color forState:(UIControlState)state;
 
 @end
