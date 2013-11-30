@@ -25,6 +25,19 @@
     [self setBackgroundImage:screenImage forState:state];
 }
 
+- (void)setcircleBackgroundColor:(UIColor *)color forState :(UIControlState)state {
+    CGRect buttonSize = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    UIView *bgView = [[UIView alloc] initWithFrame:buttonSize];
+    bgView.layer.cornerRadius = 56.7;
+    bgView.clipsToBounds = true;
+    bgView.backgroundColor = color;
+    UIGraphicsBeginImageContext(self.frame.size);
+    [bgView.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *screenImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    [self setBackgroundImage:screenImage forState:state];
+
+}
 
 - (id)initWithFrame:(CGRect)frame
 {

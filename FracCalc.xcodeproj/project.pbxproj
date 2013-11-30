@@ -2686,8 +2686,8 @@
 			isa = PBXGroup;
 			children = (
 				E9AA34E117EFD69E00691B94 /* COINSViewController.h */,
-				E9AA34E217EFD69E00691B94 /* COINSViewController.m */,
 				E9DFD0DC17E42A83008E753E /* COINSAppDelegate.h */,
+				E9AA34E217EFD69E00691B94 /* COINSViewController.m */,
 				E9DFD0DD17E42A83008E753E /* COINSAppDelegate.m */,
 			);
 			name = Controller;

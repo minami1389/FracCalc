@@ -12,5 +12,7 @@
 @interface UIButton (BGColor)
 
 - (void)setBackgroundColor:(UIColor *)color forState:(UIControlState)state;
+- (void)setcircleBackgroundColor:(UIColor *)color forState:(UIControlState)state;
+
 
 @end
