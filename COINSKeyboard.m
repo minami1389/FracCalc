@@ -99,15 +99,7 @@
 												rightButton.frame.origin.x + buttonSize.width - leftButton.frame.origin.x,
                                                 bottomButton.frame.origin.y + buttonSize.height - topButton.frame.origin.y);
         
-                CGFloat hue;
-                CGFloat satulation;
-                CGFloat brightness;;
-                CGFloat alpha;
-        
-                [aButton.backgroundColor getHue:&hue saturation:&satulation brightness:&brightness alpha:&alpha];
-                CGFloat highlightsatulation = satulation - 0.2;
-        
-                [representativeButton setcircleBackgroundColor:[UIColor colorWithHue:hue saturation:highlightsatulation brightness:brightness alpha:alpha] forState:UIControlStateHighlighted];
+                [representativeButton setMargedBackgroundColorForStateHighlighted];
         
 	}
 }
@@ -234,20 +226,17 @@
 					if (numeralRange.location == NSNotFound) { // others
                         [aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 						aButton.backgroundColor = [UIColor colorWithHue:hue saturation:0.5 brightness:1.0 alpha:1.0];
-                        UIColor *highlight = [UIColor colorWithHue:hue saturation:0.3 brightness:1.0 alpha:1.0];
-                        [aButton setBackgroundColor:highlight forState:UIControlStateHighlighted];
+                        [aButton setBackgroundColorForStateHighlighted];
                     } else { // numeral
 						[aButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                         aButton.backgroundColor = keyColor;
-                        UIColor *highlight = [UIColor colorWithHue:hue saturation:0.2 brightness:1.0 alpha:1.0];
-                        [aButton setBackgroundColor:highlight forState:UIControlStateHighlighted];
+                        [aButton setBackgroundColorForStateHighlighted];
 
                     }
 				} else { // four arithmetic operator or equal
 					[aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                     aButton.backgroundColor = [UIColor colorWithHue:hue saturation:0.6 brightness:1.0 alpha:1.0];
-                    UIColor *highlight = [UIColor colorWithHue:hue saturation:0.4 brightness:1.0 alpha:1.0];
-                    [aButton setBackgroundColor:highlight forState:UIControlStateHighlighted];
+                    [aButton setBackgroundColorForStateHighlighted];
 
                 }
 				aButton.layer.borderColor = [[UIColor colorWithHue:hue saturation:0.5 brightness:0.8 alpha:1.0] CGColor];
@@ -293,22 +282,19 @@
 					if (numeralRange.location == NSNotFound) { // others
 						[aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 						aButton.backgroundColor = [UIColor colorWithHue:hue saturation:0.5 brightness:1.0 alpha:1.0];
-                        UIColor *highlight = [UIColor colorWithHue:hue saturation:0.3 brightness:1.0 alpha:1.0];
-                        [aButton setBackgroundColor:highlight forState:UIControlStateHighlighted];
+                        [aButton setBackgroundColorForStateHighlighted];
 
                         
 					} else { // numeral
                         [aButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 						aButton.backgroundColor = keyColor;
-                        UIColor *highlight = [UIColor colorWithHue:hue saturation:0.2 brightness:1.0 alpha:1.0];
-                        [aButton setBackgroundColor:highlight forState:UIControlStateHighlighted];
+                        [aButton setBackgroundColorForStateHighlighted];
 
 					}
 				} else { // four arithmetic operator or equal
 					[aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 					aButton.backgroundColor = [UIColor colorWithHue:hue saturation:0.6 brightness:1.0 alpha:1.0];
-                    UIColor *highlight = [UIColor colorWithHue:hue saturation:0.4 brightness:1.0 alpha:1.0];
-                    [aButton setBackgroundColor:highlight forState:UIControlStateHighlighted];
+                    [aButton setBackgroundColorForStateHighlighted];
 
 				}
 				aButton.layer.borderColor = [[UIColor colorWithHue:hue saturation:0.5 brightness:0.8 alpha:1.0] CGColor];
