@@ -8,11 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-
 @interface UIButton (BGColor)
 
 - (void)setBackgroundColorForStateHighlighted;
-//- (void)setMargedBackgroundColorForStateHighlighted;
-
 
 @end

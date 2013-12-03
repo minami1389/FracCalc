@@ -24,8 +24,7 @@
     
     CGRect buttonSize = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
     UIView *bgView = [[UIView alloc] initWithFrame:buttonSize];
-    //bgView.layer.cornerRadius = self.frame.size.height / 2.0;
-    //bgView.layer.cornerRadius = self.layer.cornerRadius;
+    bgView.layer.cornerRadius = self.layer.cornerRadius;
     bgView.clipsToBounds = true;
     bgView.backgroundColor = color;
     UIGraphicsBeginImageContext(self.frame.size);
@@ -34,49 +33,5 @@
     UIGraphicsEndImageContext();
     [self setBackgroundImage:screenImage forState:UIControlStateHighlighted];
 }
-
-//- (void)setMargedBackgroundColorForStateHighlighted {
-//    
-//    CGFloat hue;
-//    CGFloat satulation;
-//    CGFloat brightness;;
-//    CGFloat alpha;
-//    
-//    [self.backgroundColor getHue:&hue saturation:&satulation brightness:&brightness alpha:&alpha];
-//    CGFloat highlightsatulation = satulation - 0.2;
-//    UIColor *color = [UIColor colorWithHue:hue saturation:highlightsatulation brightness:brightness alpha:alpha];
-//
-//    CGRect buttonSize = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-//    UIView *bgView = [[UIView alloc] initWithFrame:buttonSize];
-//    bgView.layer.cornerRadius = self.layer.cornerRadius;
-//    bgView.clipsToBounds = true;
-//    bgView.backgroundColor = color;
-//    UIGraphicsBeginImageContext(self.frame.size);
-//    [bgView.layer renderInContext:UIGraphicsGetCurrentContext()];
-//    UIImage *screenImage = UIGraphicsGetImageFromCurrentImageContext();
-//    UIGraphicsEndImageContext();
-//    [self setBackgroundImage:screenImage forState:UIControlStateHighlighted];
-//
-//}
-
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
-
-
 
 @end

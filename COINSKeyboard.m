@@ -226,20 +226,18 @@
 					if (numeralRange.location == NSNotFound) { // others
                         [aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 						aButton.backgroundColor = [UIColor colorWithHue:hue saturation:0.5 brightness:1.0 alpha:1.0];
-                        [aButton setBackgroundColorForStateHighlighted];
                     } else { // numeral
 						[aButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                         aButton.backgroundColor = keyColor;
-                        [aButton setBackgroundColorForStateHighlighted];
                     }
 				} else { // four arithmetic operator or equal
 					[aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                     aButton.backgroundColor = [UIColor colorWithHue:hue saturation:0.6 brightness:1.0 alpha:1.0];
-                    [aButton setBackgroundColorForStateHighlighted];
                 }
 				aButton.layer.borderColor = [[UIColor colorWithHue:hue saturation:0.5 brightness:0.8 alpha:1.0] CGColor];
 				aButton.layer.borderWidth = 1.0;
 				aButton.layer.cornerRadius = buttonSize.width / 2.0;
+				[aButton setBackgroundColorForStateHighlighted];
 			}
 				break;
 			case COINSKeyboardStyleBlueCircle:
@@ -280,24 +278,18 @@
 					if (numeralRange.location == NSNotFound) { // others
 						[aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 						aButton.backgroundColor = [UIColor colorWithHue:hue saturation:0.5 brightness:1.0 alpha:1.0];
-                        [aButton setBackgroundColorForStateHighlighted];
-
-                        
 					} else { // numeral
                         [aButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 						aButton.backgroundColor = keyColor;
-                        [aButton setBackgroundColorForStateHighlighted];
-
 					}
 				} else { // four arithmetic operator or equal
 					[aButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 					aButton.backgroundColor = [UIColor colorWithHue:hue saturation:0.6 brightness:1.0 alpha:1.0];
-                    [aButton setBackgroundColorForStateHighlighted];
-
 				}
 				aButton.layer.borderColor = [[UIColor colorWithHue:hue saturation:0.5 brightness:0.8 alpha:1.0] CGColor];
 				aButton.layer.borderWidth = 1.0;
 				aButton.layer.cornerRadius = buttonSize.width / 2.0;
+				[aButton setBackgroundColorForStateHighlighted];
 			}
 			default:
 				break;
