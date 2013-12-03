@@ -12,7 +12,7 @@
 @interface UIButton (BGColor)
 
 - (void)setBackgroundColorForStateHighlighted;
-- (void)setMargedBackgroundColorForStateHighlighted;
+//- (void)setMargedBackgroundColorForStateHighlighted;
 
 
 @end
