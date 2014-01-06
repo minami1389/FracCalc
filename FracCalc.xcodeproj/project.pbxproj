@@ -38,7 +38,7 @@
 		E9482C8718472175003B0D87 /* SMSBBPlugin.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SMSBBPlugin.bundle; sourceTree = "<group>"; };
 		E9482C8A18472175003B0D87 /* .copied_dyld_shared_cache_armv7s */ = {isa = PBXFileReference; lastKnownFileType = text; path = .copied_dyld_shared_cache_armv7s; sourceTree = "<group>"; };
 		E9482C8B18472175003B0D87 /* .processed_dyld_shared_cache_armv7s */ = {isa = PBXFileReference; lastKnownFileType = text; path = .processed_dyld_shared_cache_armv7s; sourceTree = "<group>"; };
-		E9482C8C18472175003B0D87 /* dyld_shared_cache_armv7s */ = {isa = PBXFileReference; lastKnownFileType = file; path = dyld_shared_cache_armv7s; sourceTree = "<group>"; };
+		E9482C8C18472175003B0D87 /* dyld_shared_cache_armv7s */ = {isa = PBXFileReference; lastKnownFileType = text; path = dyld_shared_cache_armv7s; sourceTree = "<group>"; };
 		E9482C8E18472175003B0D87 /* xpcd_cache.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = xpcd_cache.dylib; sourceTree = "<group>"; };
 		E9482C9118472175003B0D87 /* libArabicConverter.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libArabicConverter.dylib; sourceTree = "<group>"; };
 		E9482C9218472175003B0D87 /* libCyrillicConverter.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libCyrillicConverter.dylib; sourceTree = "<group>"; };
@@ -471,7 +471,7 @@
 		E9482E6D1847218A003B0D87 /* SMSBBPlugin.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SMSBBPlugin.bundle; sourceTree = "<group>"; };
 		E9482E701847218A003B0D87 /* .copied_dyld_shared_cache_armv7s */ = {isa = PBXFileReference; lastKnownFileType = text; path = .copied_dyld_shared_cache_armv7s; sourceTree = "<group>"; };
 		E9482E711847218A003B0D87 /* .processed_dyld_shared_cache_armv7s */ = {isa = PBXFileReference; lastKnownFileType = text; path = .processed_dyld_shared_cache_armv7s; sourceTree = "<group>"; };
-		E9482E721847218A003B0D87 /* dyld_shared_cache_armv7s */ = {isa = PBXFileReference; lastKnownFileType = file; path = dyld_shared_cache_armv7s; sourceTree = "<group>"; };
+		E9482E721847218A003B0D87 /* dyld_shared_cache_armv7s */ = {isa = PBXFileReference; lastKnownFileType = text; path = dyld_shared_cache_armv7s; sourceTree = "<group>"; };
 		E9482E741847218A003B0D87 /* xpcd_cache.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = xpcd_cache.dylib; sourceTree = "<group>"; };
 		E9482E771847218A003B0D87 /* libArabicConverter.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libArabicConverter.dylib; sourceTree = "<group>"; };
 		E9482E781847218A003B0D87 /* libCyrillicConverter.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libCyrillicConverter.dylib; sourceTree = "<group>"; };
@@ -2929,7 +2929,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FracCalc/FracCalc-Prefix.pch";
 				INFOPLIST_FILE = "FracCalc/FracCalc-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -2944,7 +2944,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FracCalc/FracCalc-Prefix.pch";
 				INFOPLIST_FILE = "FracCalc/FracCalc-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
